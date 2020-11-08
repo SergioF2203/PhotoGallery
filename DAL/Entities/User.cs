@@ -9,9 +9,6 @@ namespace DAL.Entities
 {
     public class User : BaseEntity
     {
-        //[Required]
-        //public int UserId { get; set; }
-
         [Required]
         public string UserName { get; set; }
 

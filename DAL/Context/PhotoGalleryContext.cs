@@ -10,6 +10,10 @@ namespace DAL.Context
 {
     public class PhotoGalleryContext : DbContext
     {
+        public PhotoGalleryContext() : base()
+        {
+
+        }
         public PhotoGalleryContext(string connectionString) : base(connectionString) { }
         public DbSet<User> Users {get; set;}
 
