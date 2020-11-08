@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Interfaces
+namespace BLL.Models
 {
-    public interface IUnitOfWork
+    public class UserModel
     {
-        IUserRepository UserRepository { get; }
-        Task SaveASync();
     }
 }
