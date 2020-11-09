@@ -20,5 +20,10 @@ namespace DAL.Entities
 
         [Required]
         public Role Role { get; set; }
+        public ICollection<Photo> Photos { get; set; }
+        public User()
+        {
+            Photos = new HashSet<Photo>();
+        }
     }
 }
