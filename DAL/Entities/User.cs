@@ -17,7 +17,6 @@ namespace DAL.Entities
         public string UserEmail { get; set; }
 
         public string UserImagePath { get; set; }
-
         [Required]
         public Role Role { get; set; }
         public ICollection<Photo> Photos { get; set; }

@@ -17,6 +17,7 @@ namespace DAL.Entities
         public DateTime DateTimeUploading { get; set; }
         public Raiting Raiting { get; set; }
         public Album Album { get; set; }
+        public ExifData ExifData { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }
@@ -33,8 +34,11 @@ namespace DAL.Entities
         public string AlbumName { get; set; }
     }
 
-    public class MetaData
+    public class ExifData
     {
+        public int? Width { get; set; }
+        public int? Height { get; set; }
+        public DateTime CreateDate { get; set; }
 
     }
 }

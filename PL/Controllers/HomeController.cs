@@ -3,14 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DAL.Context;
+using DAL.Entities;
 
 namespace PL.Controllers
 {
     public class HomeController : Controller
     {
+        private PhotoGalleryContext db = new PhotoGalleryContext();
         public ActionResult Index()
         {
-            return View();
+            var user1Photos = new List<Photo>() 
+            { 
+                new Photo 
+                { 
+                    Id = 0,
+                    PhotoTitle = "photoTitle1",
+                    PhotoPath = "https://images.pexels.com/photos/4710814/pexels-photo-4710814.jpeg?cs=srgb&dl=pexels-eugene-golovesov-4710814.jpg&fm=jpg" },
+                new Photo
+                {
+                    Id = 1,
+                    PhotoTitle = "photoTitl2",
+                    PhotoPath = "https://images.pexels.com/photos/5277693/pexels-photo-5277693.jpeg?cs=srgb&dl=pexels-daniel-torobekov-5277693.jpg&fm=jpg"
+                }
+            };
+
+            var u1 = new User { 
+                Id = 0, 
+                Role = new Role { 
+                    Id = 0, 
+                    UserRole = "Guest" }, 
+                UserEmail = "u1@gemail.com", 
+                UserName = "user1", 
+                Photos = user1Photos, 
+                UserImagePath = null 
+            };
+
+            var model = new List<User>();
+            model.Add(u1);
+
+            return View(u1);
         }
 
         public ActionResult About()
