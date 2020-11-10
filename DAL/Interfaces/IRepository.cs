@@ -10,5 +10,10 @@ namespace DAL.Interfaces
     public interface IRepository<TEntity> where TEntity : BaseEntity
     {
         Task AddAsync(TEntity entity);
+        IQueryable<TEntity> FindAll();
+        Task FindByIdAsync(int id);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteByIdAsync(int id);
+        Task DeleteAsync(TEntity entity);
     }
 }

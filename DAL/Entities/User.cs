@@ -24,5 +24,6 @@ namespace DAL.Entities
         {
             Photos = new HashSet<Photo>();
         }
+        public bool IsRemoved { get; set; }
     }
 }
