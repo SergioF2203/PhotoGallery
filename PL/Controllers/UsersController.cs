@@ -9,12 +9,16 @@ using System.Web;
 using System.Web.Mvc;
 using DAL.Context;
 using DAL.Entities;
+using DAL.Interfaces;
+using DAL;
 
 namespace PL.Controllers
 {
     public class UsersController : Controller
     {
         private PhotoGalleryContext db = new PhotoGalleryContext();
+        private readonly IUnitOfWork _unitOfWork = new UnitOfWork();
+
 
         // GET: Users
         public async Task<ActionResult> Index()
@@ -84,8 +88,10 @@ namespace PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                //db.Entry(user).State = EntityState.Modified;
+                //await db.SaveChangesAsync();
+
+                
                 return RedirectToAction("Index");
             }
             return View(user);

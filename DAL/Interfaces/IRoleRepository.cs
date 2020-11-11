@@ -7,7 +7,7 @@ using DAL.Entities;
 
 namespace DAL.Interfaces
 {
-    interface IRoleRepository : IRepository<Role>
+    public interface IRoleRepository : IRepository<Role>
     {
     }
 }

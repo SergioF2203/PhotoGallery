@@ -15,6 +15,7 @@ namespace DAL
         private readonly PhotoGalleryContext context;
 
         private IUserRepository userRepository;
+        private IRoleRepository roleRepository;
 
         public UnitOfWork(string connectionString)
         {
@@ -29,7 +30,18 @@ namespace DAL
                     userRepository = new UserRepository(context);
                 }
                 return userRepository;
+            }
+        }
 
+        public IRoleRepository RoleRepository
+        {
+            get
+            {
+                if(roleRepository is null)
+                {
+                    roleRepository = new RoleRepository(context);
+                }
+                return roleRepository;
             }
         }
 
