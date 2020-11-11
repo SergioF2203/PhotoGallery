@@ -57,6 +57,7 @@
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Migrations\202011081223112_initial migration.cs" />
@@ -71,8 +72,13 @@
     <Compile Include="Migrations\202011100425403_v2.designer.cs">
       <DependentUpon>202011100425403_v2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011102031398_v3.cs" />
+    <Compile Include="Migrations\202011102031398_v3.designer.cs">
+      <DependentUpon>202011102031398_v3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
@@ -89,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011100425403_v2.resx">
       <DependentUpon>202011100425403_v2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011102031398_v3.resx">
+      <DependentUpon>202011102031398_v3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

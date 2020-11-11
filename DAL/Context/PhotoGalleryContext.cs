@@ -14,7 +14,6 @@ namespace DAL.Context
         public PhotoGalleryContext(string connectionString) : base(connectionString) { }
         public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
-
-
+        public DbSet<Role> Roles { get; set; }
     }
 }
