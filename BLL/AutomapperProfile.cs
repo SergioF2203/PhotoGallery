@@ -13,7 +13,9 @@ namespace BLL
     {
         public AutomapperProfile()
         {
-            CreateMap<User, UserModel>().ReverseMap();
+            CreateMap<User, UserModel>().ForMember(dest => dest.UserModelEmail, opt => opt.MapFrom(src => src.UserEmail));
+
+
         }
     }
 }

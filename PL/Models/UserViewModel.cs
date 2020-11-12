@@ -10,6 +10,6 @@ namespace PL.Models
         public int UserViewModelId { get; set; }
         public string UserViewModelName { get; set; }
         public string UserViewModelEmail { get; set; }
-        public string UserViewModelImageRath { get; set; }
+        public string UserViewModelImagePath { get; set; }
     }
 }

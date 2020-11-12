@@ -36,7 +36,11 @@ namespace BLL.Services
 
         public IEnumerable<UserModel> GetAll()
         {
-            throw new NotImplementedException();
+            var users = _unitOfWork.UserRepository.FindAll().ToList();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, UserModel>().ForMember(dest=>dest.UserModelEmail, opt=>opt.MapFrom(src=>src.UserEmail))).CreateMapper();
+            var userModels = mapper.Map<IEnumerable<User>, IEnumerable<UserModel>>(users);
+
+            return userModels;
         }
 
         public Task<UserModel> GetByIdAsync(int id)

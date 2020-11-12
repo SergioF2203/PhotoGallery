@@ -23,7 +23,7 @@ namespace PL
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             NinjectModule userModule = new UserModule();
-            NinjectModule serviceModule = new ServiceModule("Default Connection");
+            NinjectModule serviceModule = new ServiceModule("DefaultConnection");
             var kernel = new StandardKernel(userModule, serviceModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }

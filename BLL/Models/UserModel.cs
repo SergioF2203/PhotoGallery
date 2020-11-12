@@ -8,9 +8,10 @@ namespace BLL.Models
 {
     public class UserModel
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string UserImagePath { get; set; }
         public string Role { get; set; }
+        public string UserModelEmail { get; set; }
     }
 }

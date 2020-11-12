@@ -29,8 +29,10 @@ namespace PL.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var temp = _userService.GetAll();
-            return View(_mapper.Map<IEnumerable<UserModel>, UserViewModel>(temp));
+            var userModels = _userService.GetAll();
+            var users = _mapper.Map<IEnumerable<UserModel>, IEnumerable<UserViewModel>>(userModels);
+
+            return View(users);
         }
 
         // GET: Users/Details/5
@@ -130,13 +132,13 @@ namespace PL.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                //db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        _uni .Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

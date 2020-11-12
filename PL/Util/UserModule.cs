@@ -21,7 +21,7 @@ namespace PL.Util
                 {
                     cfg.AddProfile<ViewAutomapperProfile>();
                 }).CreateMapper();
-            }).InSingletonScope();
+            });
         }
     }
 }

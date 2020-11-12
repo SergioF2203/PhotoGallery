@@ -22,13 +22,13 @@ namespace BLL
         {
             Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument(_connectionString);
 
-            Bind<IMapper>().ToMethod(ctx =>
-            {
-                return new MapperConfiguration(cfg =>
-                {
-                    cfg.AddProfile<AutomapperProfile>();
-                }).CreateMapper();
-            }).InSingletonScope();
+            //Bind<IMapper>().ToMethod(ctx =>
+            //{
+            //    return new MapperConfiguration(cfg =>
+            //    {
+            //        cfg.AddProfile<AutomapperProfile>();
+            //    }).CreateMapper();
+            //});
         }
     }
 }
