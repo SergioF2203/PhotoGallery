@@ -7,38 +7,45 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using DAL.Context;
-using DAL.Entities;
-using DAL.Interfaces;
-using DAL;
+using BLL.Interfaces;
+using AutoMapper;
+using BLL.Models;
+using PL.Models;
 
 namespace PL.Controllers
 {
     public class UsersController : Controller
     {
-        private PhotoGalleryContext db = new PhotoGalleryContext();
-        private readonly IUnitOfWork _unitOfWork = new UnitOfWork();
+        private readonly IUserService _userService;
+        private readonly Mapper _mapper;
+
+        public UsersController(IUserService userService, Mapper mapper)
+        {
+            _userService = userService;
+            _mapper = mapper;
+        }
 
 
         // GET: Users
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await db.Users.ToListAsync());
+            var temp = _userService.GetAll();
+            return View(_mapper.Map<IEnumerable<UserModel>, UserViewModel>(temp));
         }
 
         // GET: Users/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = await db.Users.FindAsync(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //User user = await db.Users.FindAsync(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View(/*user*/);
         }
 
         // GET: Users/Create
@@ -52,31 +59,31 @@ namespace PL.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,UserName,UserEmail,UserImagePath")] User user)
+        public async Task<ActionResult> Create([Bind(Include = "Id,UserName,UserEmail,UserImagePath")] UserViewModel user)
         {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    db.Users.Add(user);
+            //    await db.SaveChangesAsync();
+            //    return RedirectToAction("Index");
+            //}
 
-            return View(user);
+            return View(/*user*/);
         }
 
         // GET: Users/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = await db.Users.FindAsync(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //User user = await db.Users.FindAsync(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View(/*user*/);
         }
 
         // POST: Users/Edit/5
@@ -84,7 +91,7 @@ namespace PL.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,UserName,UserEmail,UserImagePath")] User user)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,UserName,UserEmail,UserImagePath")] UserViewModel user)
         {
             if (ModelState.IsValid)
             {
@@ -100,16 +107,16 @@ namespace PL.Controllers
         // GET: Users/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = await db.Users.FindAsync(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //User user = await db.Users.FindAsync(id);
+            //if (user == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View(/*user*/);
         }
 
         // POST: Users/Delete/5
@@ -117,9 +124,9 @@ namespace PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            User user = await db.Users.FindAsync(id);
-            db.Users.Remove(user);
-            await db.SaveChangesAsync();
+            //User user = await db.Users.FindAsync(id);
+            //db.Users.Remove(user);
+            //await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -127,7 +134,7 @@ namespace PL.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -45,7 +45,7 @@ namespace DAL
             }
         }
 
-        public async Task SaveASync()
+        public async Task SaveAsync()
         {
             await context.SaveChangesAsync();
         }

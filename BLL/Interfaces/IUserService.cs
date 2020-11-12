@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLL.Models;
 
-namespace DAL.Interfaces
+namespace BLL.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUserService : ICrud<UserModel>
     {
-        IUserRepository UserRepository { get; }
-        Task SaveAsync();
     }
 }
