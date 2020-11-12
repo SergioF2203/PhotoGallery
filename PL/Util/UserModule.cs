@@ -14,6 +14,14 @@ namespace PL.Util
         public override void Load()
         {
             Bind<IUserService>().To<UserService>();
+
+            Bind<IMapper>().ToMethod(ctx =>
+            {
+                return new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile<ViewAutomapperProfile>();
+                }).CreateMapper();
+            }).InSingletonScope();
         }
     }
 }

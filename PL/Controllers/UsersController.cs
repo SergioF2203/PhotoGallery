@@ -17,9 +17,9 @@ namespace PL.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService, Mapper mapper)
+        public UsersController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
