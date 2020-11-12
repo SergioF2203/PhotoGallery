@@ -19,7 +19,7 @@ namespace PL.Util
             {
                 return new MapperConfiguration(cfg =>
                 {
-                    cfg.AddProfile<ViewAutomapperProfile>();
+                    cfg.AddProfile<AutomapperProfile>();
                 }).CreateMapper();
             });
         }

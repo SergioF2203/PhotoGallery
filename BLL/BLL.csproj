@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutomapperProfile.cs" />
     <Compile Include="Interfaces\ICrud.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\UserModel.cs" />

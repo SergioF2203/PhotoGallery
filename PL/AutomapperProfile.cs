@@ -9,9 +9,9 @@ using PL.Models;
 
 namespace PL
 {
-    public class ViewAutomapperProfile : Profile
+    public class AutomapperProfile : Profile
     {
-        public ViewAutomapperProfile()
+        public AutomapperProfile()
         {
             CreateMap<User, UserModel>().ForMember(dest => dest.UserModelEmail, opt => opt.MapFrom(src => src.UserEmail));
 
