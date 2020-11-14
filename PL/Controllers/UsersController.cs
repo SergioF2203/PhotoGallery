@@ -29,10 +29,10 @@ namespace PL.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var userModels = _userService.GetAll();
-            var users = _mapper.Map<IEnumerable<UserModel>, IEnumerable<UserViewModel>>(userModels);
+            //var userModels = _userService.GetAll();
+            //var users = _mapper.Map<IEnumerable<UserModel>, IEnumerable<UserViewModel>>(userModels);
 
-            return View(users);
+            return View(/*users*/);
         }
 
         // GET: Users/Details/5

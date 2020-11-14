@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using BLL.Interfaces;
+using Microsoft.Owin;
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(PL.Startup))]

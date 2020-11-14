@@ -33,12 +33,18 @@
 </div>*@
 
 
-<div><span>Index</span>
-    @*<span>@Model.UserName</span>
-    @foreach (var item in Model.Photos)
-	{
-        <span>@item.PhotoTitle</span>
-        <div style="background-image:url(@item.PhotoPath); width: 300px; height: 300px;background-size: 100%, 100%; background-position: center; background-repeat:no-repeat"></div>
-	}*@
+	<div>
+		<span>Index</span>
+		<ul class="nav navbar-nav navbar-right">
+			<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+			<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+		</ul>
 
-</div>
+		@*<span>@Model.UserName</span>
+		@foreach (var item in Model.Photos)
+		{
+			<span>@item.PhotoTitle</span>
+			<div style="background-image:url(@item.PhotoPath); width: 300px; height: 300px;background-size: 100%, 100%; background-position: center; background-repeat:no-repeat"></div>
+		}*@
+
+	</div>

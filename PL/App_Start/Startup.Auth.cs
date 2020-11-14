@@ -1,4 +1,8 @@
 ﻿using System;
+using BLL.Interfaces;
+using BLL.Services;
+using DAL.Context;
+using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -11,11 +15,13 @@ namespace PL
 {
     public partial class Startup
     {
+        IServiceCreator serviceCreator = new ServiceCreator();
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(CreateUserService);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
@@ -63,6 +69,11 @@ namespace PL
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+
+        private IUserService CreateUserService()
+        {
+            return serviceCreator.CreateUserService("DefaultConnection");
         }
     }
 }

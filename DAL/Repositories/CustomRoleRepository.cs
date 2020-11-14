@@ -10,15 +10,15 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class RoleRepository : IRoleRepository
+    public class CustomRoleRepository : IRoleRepository
     {
         private readonly PhotoGalleryContext _context;
 
-        public RoleRepository(PhotoGalleryContext context)
+        public CustomRoleRepository(PhotoGalleryContext context)
         {
             _context = context;
         }
-        public async Task AddAsync(Role entity)
+        public async Task AddAsync(CustomRole entity)
         {
             if(entity is null)
             {
@@ -28,7 +28,7 @@ namespace DAL.Repositories
             await Task.Run(() => _context.Roles.Add(entity));
         }
 
-        public async Task DeleteAsync(Role entity)
+        public async Task DeleteAsync(CustomRole entity)
         {
             if(entity is null)
             {
@@ -50,7 +50,7 @@ namespace DAL.Repositories
             _context.Roles.Remove(removedEntity);
         }
 
-        public IQueryable<Role> FindAll()
+        public IQueryable<CustomRole> FindAll()
         {
             return _context.Roles;
         }
@@ -60,7 +60,7 @@ namespace DAL.Repositories
             await _context.Roles.FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task UpdateAsync(Role entity)
+        public async Task UpdateAsync(CustomRole entity)
         {
             var updateEntity = await _context.Roles.FirstOrDefaultAsync(r => r.Id == entity.Id);
 

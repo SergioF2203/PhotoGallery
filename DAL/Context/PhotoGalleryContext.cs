@@ -5,15 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DAL.Context
 {
-    public class PhotoGalleryContext : DbContext
+    public class PhotoGalleryContext : IdentityDbContext<ApplicationUser>
     {
-        public PhotoGalleryContext() : base() { }
-        public PhotoGalleryContext(string connectionString) : base(connectionString) { }
-        public DbSet<User> Users { get; set; }
+        public PhotoGalleryContext() : base("DefaultConnection") { }
+
+        public PhotoGalleryContext(string connection) : base(connection) { }
+
+
+        public static PhotoGalleryContext Create()
+        {
+            return new PhotoGalleryContext();
+        }
+
+        public DbSet<ClientProfile> ClientProfiles { get; set; }
+
+        //public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        //public DbSet<Role> Roles { get; set; }
     }
 }

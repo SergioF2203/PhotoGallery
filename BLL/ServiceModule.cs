@@ -20,15 +20,8 @@ namespace BLL
         }
         public override void Load()
         {
-            Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument(_connectionString);
+            //Bind<IUnitOfWork>().To<UnitOfWork>().WithConstructorArgument(_connectionString);
 
-            //Bind<IMapper>().ToMethod(ctx =>
-            //{
-            //    return new MapperConfiguration(cfg =>
-            //    {
-            //        cfg.AddProfile<AutomapperProfile>();
-            //    }).CreateMapper();
-            //});
         }
     }
 }

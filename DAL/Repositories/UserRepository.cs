@@ -18,12 +18,12 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public async Task AddAsync(User entity)
+        public async Task AddAsync(CustomUser entity)
         {
             await Task.Run(() => _context.Users.Add(entity));
         }
 
-        public async Task DeleteAsync(User entity)
+        public async Task DeleteAsync(CustomUser entity)
         {
             var removedItem = await _context.Users.FirstOrDefaultAsync(e => e.Id == entity.Id);
 
@@ -48,7 +48,7 @@ namespace DAL.Repositories
             await UpdateAsync(removeEntity);
         }
 
-        public IQueryable<User> FindAll()
+        public IQueryable<CustomUser> FindAll()
         {
             return _context.Users;
         }
@@ -58,7 +58,7 @@ namespace DAL.Repositories
             await Task.Run(() => _context.Users.Find(id));
         }
 
-        public async Task UpdateAsync(User entity)
+        public async Task UpdateAsync(CustomUser entity)
         {
             var currentEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
 
