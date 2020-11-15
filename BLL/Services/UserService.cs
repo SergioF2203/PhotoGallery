@@ -17,20 +17,11 @@ namespace BLL.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IMapper _mapper;
 
-        public UserService(IUnitOfWork unitOfWork/*, IMapper mapper*/)
+        public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            //_mapper = mapper;
         }
-        //public async Task AddAsync(UserModel model)
-        //{
-        //    // need to check model
-
-        //    await _unitOfWork.UserRepository.AddAsync(_mapper.Map<UserModel, CustomUser>(model));
-        //    await _unitOfWork.SaveAsync();
-        //}
 
         public async Task<ClaimsIdentity> Authenticate(UserDto userDto)
         {
@@ -56,6 +47,7 @@ namespace BLL.Services
             {
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.UserName };
                 var result = await _unitOfWork.UserManager.CreateAsync(user, userDto.Password);
+
                 if (result.Errors.Any())
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
 
@@ -72,26 +64,6 @@ namespace BLL.Services
                 return new OperationDetails(false, "The User with such email is already exist", "Email");
             }
         }
-
-        //public Task DeleteByIdAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
-        //public IEnumerable<UserModel> GetAll()
-        //{
-        //    var users = _unitOfWork.UserRepository.FindAll().ToList();
-        //    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CustomUser, UserModel>().ForMember(dest=>dest.UserModelEmail, opt=>opt.MapFrom(src=>src.UserEmail))).CreateMapper();
-        //    var userModels = mapper.Map<IEnumerable<CustomUser>, IEnumerable<UserModel>>(users);
-
-        //    return userModels;
-        //}
-
-        //public Task<UserModel> GetByIdAsync(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public async Task SetInitialData(UserDto adminDto, IEnumerable<string> roles)
         {
