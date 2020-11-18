@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -31,9 +32,6 @@ namespace PL.Controllers
         {
         }
 
-
-
-
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -50,6 +48,8 @@ namespace PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            await SetInitialData();
+
             if (ModelState.IsValid)
             {
                 var userDto = new UserDto { Email = model.Email, Password = model.Password };
@@ -136,9 +136,11 @@ namespace PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            await SetInitialData();
+
             if (ModelState.IsValid)
             {
-                var user = new UserDto { Email = model.Email, UserName = model.Email, Password = model.Password, Role = "User" };
+                var user = new UserDto { Email = model.Email, UserName = model.Email, Password = model.Password, Role = "user" };
                 OperationDetails res = await UserService.Create(user);
 
                 if (res.Succeeded)
@@ -372,14 +374,14 @@ namespace PL.Controllers
         //}
 
         //
-        // POST: /Account/LogOff
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult LogOff()
-        //{
-        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-        //    return RedirectToAction("Index", "Home");
-        //}
+        //POST: /Account/LogOff
+       [HttpPost]
+       [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
 
         ////
         //// GET: /Account/ExternalLoginFailure
@@ -402,6 +404,18 @@ namespace PL.Controllers
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
+
+        private async Task SetInitialData()
+        {
+            await UserService.SetInitialData(new UserDto
+            {
+                Email = "admin@eamil.com",
+                UserName = "admin@eamil.com",
+                Password = "qqqqqq",
+                Name = "Admin",
+                Role = "Admin"
+            }, new List<string> { "admin", "user" });
+        }
 
         private IAuthenticationManager AuthenticationManager
         {

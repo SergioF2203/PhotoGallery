@@ -1,8 +1,6 @@
 ﻿using System;
 using BLL.Interfaces;
 using BLL.Services;
-using DAL.Context;
-using DAL.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -19,7 +17,7 @@ namespace PL
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(PhotoGalleryContext.Create);
+            //app.CreatePerOwinContext(PhotoGalleryContext.Create);
             app.CreatePerOwinContext<IUserService>(CreateUserService);
 
             // Enable the application to use a cookie to store information for the signed in user

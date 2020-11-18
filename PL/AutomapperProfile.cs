@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using AutoMapper;
 using BLL.Models;
-using DAL.Entities;
 using PL.Models;
 
 namespace PL
