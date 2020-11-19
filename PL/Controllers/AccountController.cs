@@ -69,13 +69,17 @@ namespace PL.Controllers
                         IsPersistent = true
 
                     }, claims);
+
+                    foreach(var item in claims.Claims)
+                    {
+                        if(item.Value == "admin")
+                           return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                    }
+
                 }
             }
 
             return RedirectToAction("Index", "Home");
-
-
-
         }
 
         //

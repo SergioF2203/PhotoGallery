@@ -37,10 +37,6 @@ namespace PL.Controllers
         [Authorize(Roles ="admin")]
         public ActionResult AllRoles(UserDto userDto)
         {
-            //if (userDto.Role != "admin")
-            //{
-            //    return View("Error");
-            //}
 
             var roles = RoleService.GetAll();
 
