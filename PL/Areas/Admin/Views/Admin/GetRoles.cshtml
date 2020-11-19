@@ -1,0 +1,21 @@
+﻿
+@{
+	ViewBag.Title = "GetRoles";
+	Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
+}
+
+<h2>GetRoles</h2>
+
+@using (Html.BeginForm("GetRoles", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+	<ul>
+		@foreach (var item in Model)
+		{
+			<li>@item.Name</li>
+		}
+	</ul>
+	<input type="submit" class="btn btn-primary" name="submit" value="Create" />
+	<input type="submit" class="btn btn-dark" name="submit" value="Cancel" />
+
+}
+

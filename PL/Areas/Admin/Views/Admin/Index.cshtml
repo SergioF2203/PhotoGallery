@@ -1,9 +1,20 @@
-﻿
+﻿@model IEnumerable<PL.Models.RoleViewModel>
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
+	ViewBag.Title = "Index";
+	Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
 }
 
 <h2>Admin Panel</h2>
 
+<div>
+	@using (Html.BeginForm("GetRoles", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+	{
+		<input type="submit" class="btn btn-primary" value="Roles" />
+	}
 
+	@using (Html.BeginForm("GetUsers", "Admin", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+	{
+		<input type="submit" class="btn btn-primary" value="Users" />
+	}
+
+</div>
