@@ -1,0 +1,18 @@
+﻿@model IEnumerable<PL.Models.RoleViewModel>
+@{
+	ViewBag.Title = "ManageRoles";
+	Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>ManageRoles</h2>
+
+@using (Html.BeginForm("AddRole", "Role", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
+{
+	<ul>
+		@foreach (var item in Model)
+		{
+			<li>@item.Name</li>
+		}
+	</ul>
+	<input type="submit" class="btn btn-default" value="Add" />
+}

@@ -103,22 +103,22 @@ namespace PL.Controllers
         //        return View(model);
         //    }
 
-            // The following code protects for brute force attacks against the two factor codes. 
-            // If a user enters incorrect codes for a specified amount of time then the user account 
-            // will be locked out for a specified amount of time. 
-            // You can configure the account lockout settings in IdentityConfig
-            //var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(model.ReturnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid code.");
-            //        return View(model);
-            //}
+        // The following code protects for brute force attacks against the two factor codes. 
+        // If a user enters incorrect codes for a specified amount of time then the user account 
+        // will be locked out for a specified amount of time. 
+        // You can configure the account lockout settings in IdentityConfig
+        //var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+        //switch (result)
+        //{
+        //    case SignInStatus.Success:
+        //        return RedirectToLocal(model.ReturnUrl);
+        //    case SignInStatus.LockedOut:
+        //        return View("Lockout");
+        //    case SignInStatus.Failure:
+        //    default:
+        //        ModelState.AddModelError("", "Invalid code.");
+        //        return View(model);
+        //}
         //}
 
         //
@@ -409,11 +409,11 @@ namespace PL.Controllers
         {
             await UserService.SetInitialData(new UserDto
             {
-                Email = "admin@eamil.com",
-                UserName = "admin@eamil.com",
+                Email = "admin@email.com",
+                UserName = "admin@email.com",
                 Password = "qqqqqq",
-                Name = "Admin",
-                Role = "Admin"
+                Name = "admin",
+                Role = "admin"
             }, new List<string> { "admin", "user" });
         }
 

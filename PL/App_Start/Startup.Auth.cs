@@ -14,11 +14,13 @@ namespace PL
     public partial class Startup
     {
         IServiceCreator serviceCreator = new ServiceCreator();
+        
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
             //app.CreatePerOwinContext(PhotoGalleryContext.Create);
             app.CreatePerOwinContext<IUserService>(CreateUserService);
+            app.CreatePerOwinContext<IRoleService>(CreateRoleService);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -44,6 +46,11 @@ namespace PL
         private IUserService CreateUserService()
         {
             return serviceCreator.CreateUserService("DefaultConnection");
+        }
+
+        private IRoleService CreateRoleService()
+        {
+            return serviceCreator.CreateRoleService("DefaultConnection");
         }
     }
 }
