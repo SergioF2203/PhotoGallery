@@ -1,0 +1,29 @@
+﻿@*@model IEnumerable<PL.Models.UserViewModel>*@
+@{
+    ViewBag.Title = "GetUsers";
+    Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
+}
+
+<h2>GetUsers</h2>
+
+<div>
+	<table class="table table-striped">
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th></th>
+		</tr>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>@user.Id</td>
+				<td>@user.UserName</td>
+				<td>@user.Email</td>
+				<td><button type="button" class="btn btn-danger">ok</button></td>
+			</tr>
+		}
+		@*}*@
+	</table>
+</div>
+

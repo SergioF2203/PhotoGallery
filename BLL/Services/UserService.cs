@@ -17,10 +17,13 @@ namespace BLL.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly Mapper _mapper;
 
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDto>().ReverseMap());
+            _mapper = new Mapper(config);
         }
 
         public async Task<ClaimsIdentity> Authenticate(UserDto userDto)
@@ -63,6 +66,15 @@ namespace BLL.Services
             {
                 return new OperationDetails(false, "The User with such email is already exist", "Email");
             }
+        }
+
+        public IEnumerable<UserDto> GetUsers()
+        {
+            var users =  _unitOfWork.UserManager.Users;
+            var temp = users.ToList();
+
+            return _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<UserDto>>(users);
+
         }
 
         public async Task SetInitialData(UserDto adminDto, IEnumerable<string> roles)

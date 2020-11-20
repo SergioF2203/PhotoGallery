@@ -24,9 +24,23 @@ namespace PL.Areas.Admin.Controllers
             }
         }
 
+        private IUserService UserService
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
+            }
+        }
+
         public AdminController()
         {
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDto, RoleViewModel>());
+            //var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDto, RoleViewModel>().ReverseMap());
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<RoleDto, RoleViewModel>().ReverseMap();
+                cfg.CreateMap<UserDto, UserViewModel>().ReverseMap();
+            });
+
             _mapper = new Mapper(config);
         }
 
@@ -45,7 +59,7 @@ namespace PL.Areas.Admin.Controllers
                 case "Create":
                     return RedirectToAction("AddRole");
                 default:
-                    var roles = RoleService.GetAll();
+                    var roles = RoleService.GetRoles();
                     return View(_mapper.Map<IEnumerable<RoleDto>, IEnumerable<RoleViewModel>>(roles));
             }
         }
@@ -68,13 +82,17 @@ namespace PL.Areas.Admin.Controllers
                     }
                     await RoleService.Create(model.Name);
                     return RedirectToAction("GetRoles");
-                //case "Create":
-                //    return RedirectToAction("AddRole");
                 case "Cancel":
                     return RedirectToAction("GetRoles");
                 default:
                     return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult GetUsers()
+        {
+            var users = UserService.GetUsers();
+            return View(_mapper.Map <IEnumerable<UserDto>, IEnumerable<UserViewModel>>(users));
         }
     }
 }

@@ -46,7 +46,7 @@ namespace BLL.Services
             return new OperationDetails(true, "The role added", string.Empty);
         }
 
-        public IEnumerable<RoleDto> GetAll()
+        public IEnumerable<RoleDto> GetRoles()
         {
             var roles = _unitOfWork.RoleManager.Roles;
 

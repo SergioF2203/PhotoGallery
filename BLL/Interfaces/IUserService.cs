@@ -13,6 +13,7 @@ namespace BLL.Interfaces
     {
         Task<OperationDetails> Create(UserDto userDto);
         Task<ClaimsIdentity> Authenticate(UserDto userDto);
+        IEnumerable<UserDto> GetUsers();
         Task SetInitialData(UserDto adminDto, IEnumerable<string> roles);
     }
 }

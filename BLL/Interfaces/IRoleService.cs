@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     public interface IRoleService : IDisposable
     {
         Task<OperationDetails> Create(string name);
-        IEnumerable<RoleDto> GetAll();
+        IEnumerable<RoleDto> GetRoles();
         Task<RoleDto> GetRoleById(string id);
 
     }

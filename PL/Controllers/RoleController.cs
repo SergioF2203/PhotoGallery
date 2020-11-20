@@ -38,7 +38,7 @@ namespace PL.Controllers
         public ActionResult AllRoles(UserDto userDto)
         {
 
-            var roles = RoleService.GetAll();
+            var roles = RoleService.GetRoles();
 
             return View(_mapper.Map<IEnumerable<RoleDto>, IEnumerable<RoleViewModel>>(roles));
         }
