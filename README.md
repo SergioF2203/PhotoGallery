@@ -1,2 +1,4 @@
 <h1>Photo Gallery Web App</h1>
-_______
+
+
+Application designed to store and publish photographs.
