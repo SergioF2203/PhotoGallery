@@ -100,9 +100,11 @@ namespace PL.Areas.Admin.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        public void Block(string email)
+        public async Task<ActionResult> Block(string email)
         {
-            var user = UserService.FindByEmailAsync(email);
+            await UserService.ChangeLockUserState(email);
+
+            return Redirect("/Admin/Admin/GetUsers/");
         }
     }
 }

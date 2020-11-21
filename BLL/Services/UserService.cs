@@ -22,7 +22,7 @@ namespace BLL.Services
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDto>().ReverseMap());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDto>().ForMember(u => u.IsLockOut, opt => opt.MapFrom(src => src.LockoutEnabled)).ReverseMap());
             _mapper = new Mapper(config);
         }
 
@@ -76,10 +76,8 @@ namespace BLL.Services
         public IEnumerable<UserDto> GetUsers()
         {
             var users = _unitOfWork.UserManager.Users;
-            var temp = users.ToList();
 
             return _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<UserDto>>(users);
-
         }
 
         public async Task SetInitialData(UserDto adminDto, IEnumerable<string> roles)
@@ -112,11 +110,27 @@ namespace BLL.Services
             }
         }
 
-        public async Task<UserDto> FindByEmailAsync(string email)
+        /// <summary>
+        /// Change Lock state User account
+        /// </summary>
+        /// <param name="email">User's email to lock account</param>
+        /// <returns></returns>
+        public async Task ChangeLockUserState(string email)
         {
             var user = await _unitOfWork.UserManager.FindByEmailAsync(email);
+            var state = user.LockoutEnabled;
+            if (state)
+            {
+                user.LockoutEnabled = false;
+                user.LockoutEndDateUtc = null;
+            }
+            else
+            {
+                user.LockoutEnabled = true;
+                user.LockoutEndDateUtc = DateTime.MaxValue;
+            }
 
-            return _mapper.Map<ApplicationUser, UserDto>(user);
+            await _unitOfWork.UserManager.UpdateAsync(user);
         }
     }
 }

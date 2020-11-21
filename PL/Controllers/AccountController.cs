@@ -59,7 +59,6 @@ namespace PL.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Login or Password is incorrect or Your account is blocked");
                     return View(model);
-
                 }
                 else
                 {

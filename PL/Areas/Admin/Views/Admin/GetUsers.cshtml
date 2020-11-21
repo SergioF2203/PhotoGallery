@@ -21,10 +21,18 @@
 				<td>@user.UserName</td>
 				<td>@user.Email</td>
 				<td>
+
 					@using (Html.BeginForm("Block", "Admin", FormMethod.Post, new { email = user.Email }))
 					{
-						<input type="hidden" value="@user.Email"  name="email"  />
-						<input type="submit"  value="Block"  class="btn btn-outline-danger" />
+						<input type="hidden" value="@user.Email" name="email" />
+						if (user.IsLockOut)
+						{
+							<input type="submit" value="Unlock" class="btn btn-danger" />
+						}
+						else
+						{
+							<input type="submit" value="Lock" class="btn btn-outline-danger" />
+						}
 					}
 				</td>
 			</tr>

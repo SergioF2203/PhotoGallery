@@ -15,6 +15,6 @@ namespace BLL.Interfaces
         Task<ClaimsIdentity> Authenticate(UserDto userDto);
         IEnumerable<UserDto> GetUsers();
         Task SetInitialData(UserDto adminDto, IEnumerable<string> roles);
-        Task<UserDto> FindByEmailAsync(string email);
+        Task ChangeLockUserState(string email);
     }
 }
