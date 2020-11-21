@@ -32,10 +32,15 @@ namespace BLL.Services
 
             var user = await _unitOfWork.UserManager.FindAsync(userDto.Email, userDto.Password);
 
+
             if (user != null)
             {
-                claims = await _unitOfWork.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                if (user.LockoutEnabled && user.LockoutEndDateUtc > DateTime.Now)
+                {
+                    return claims;
+                }
 
+                claims = await _unitOfWork.UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             }
 
             return claims;
@@ -70,7 +75,7 @@ namespace BLL.Services
 
         public IEnumerable<UserDto> GetUsers()
         {
-            var users =  _unitOfWork.UserManager.Users;
+            var users = _unitOfWork.UserManager.Users;
             var temp = users.ToList();
 
             return _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<UserDto>>(users);
@@ -107,5 +112,11 @@ namespace BLL.Services
             }
         }
 
+        public async Task<UserDto> FindByEmailAsync(string email)
+        {
+            var user = await _unitOfWork.UserManager.FindByEmailAsync(email);
+
+            return _mapper.Map<ApplicationUser, UserDto>(user);
+        }
     }
 }

@@ -57,13 +57,16 @@ namespace PL.Controllers
 
                 if (claims is null)
                 {
-                    ModelState.AddModelError(string.Empty, "Login or Password is incorrect");
+                    ModelState.AddModelError(string.Empty, "Login or Password is incorrect or Your account is blocked");
                     return View(model);
 
                 }
                 else
                 {
                     AuthenticationManager.SignOut();
+
+
+
                     AuthenticationManager.SignIn(new AuthenticationProperties
                     {
                         IsPersistent = true

@@ -34,7 +34,6 @@ namespace PL.Areas.Admin.Controllers
 
         public AdminController()
         {
-            //var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDto, RoleViewModel>().ReverseMap());
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<RoleDto, RoleViewModel>().ReverseMap();
@@ -60,7 +59,8 @@ namespace PL.Areas.Admin.Controllers
                     return RedirectToAction("AddRole");
                 default:
                     var roles = RoleService.GetRoles();
-                    return View(_mapper.Map<IEnumerable<RoleDto>, IEnumerable<RoleViewModel>>(roles));
+                    var data = new Tuple<IEnumerable<RoleViewModel>, RoleViewModel>(_mapper.Map<IEnumerable<RoleDto>, IEnumerable<RoleViewModel>>(roles), new RoleViewModel());
+                    return View(data);
             }
         }
 
@@ -93,6 +93,16 @@ namespace PL.Areas.Admin.Controllers
         {
             var users = UserService.GetUsers();
             return View(_mapper.Map <IEnumerable<UserDto>, IEnumerable<UserViewModel>>(users));
+        }
+
+        public ActionResult Back()
+        {
+            return Redirect(Request.UrlReferrer.ToString());
+        }
+
+        public void Block(string email)
+        {
+            var user = UserService.FindByEmailAsync(email);
         }
     }
 }

@@ -1,21 +1,35 @@
-﻿
+﻿@model Tuple<IEnumerable<PL.Models.RoleViewModel>, PL.Models.RoleViewModel>
 @{
 	ViewBag.Title = "GetRoles";
 	Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
 }
 
-<h2>GetRoles</h2>
+<h2>User's Roles</h2>
+
+<table class="table table-sm">
+	<tr>
+		<th>Role's Name</th>
+		<th>Actions</th>
+	</tr>
+	@foreach (var item in Model.Item1)
+	{
+		<tr>
+			<td>@item.Name</td>
+			<td>
+				@using (Html.BeginForm())
+				{
+					<input type="submit" class="btn btn-outline-primary" value="Edit User's List" />
+					<input type="submit" class="btn btn-outline-danger" value="Remove" />
+
+				}
+			</td>
+		</tr>
+	}
+</table>
 
 @using (Html.BeginForm("GetRoles", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-	<ul>
-		@foreach (var item in Model)
-		{
-			<li>@item.Name</li>
-		}
-	</ul>
 	<input type="submit" class="btn btn-primary" name="submit" value="Create" />
 	<input type="submit" class="btn btn-dark" name="submit" value="Cancel" />
-
 }
 

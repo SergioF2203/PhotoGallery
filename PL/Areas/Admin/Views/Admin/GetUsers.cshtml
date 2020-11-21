@@ -1,7 +1,7 @@
 ﻿@*@model IEnumerable<PL.Models.UserViewModel>*@
 @{
-    ViewBag.Title = "GetUsers";
-    Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
+	ViewBag.Title = "GetUsers";
+	Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
 }
 
 <h2>GetUsers</h2>
@@ -12,7 +12,7 @@
 			<th>Id</th>
 			<th>Name</th>
 			<th>Email</th>
-			<th></th>
+			<th>Actions</th>
 		</tr>
 		@foreach (var user in Model)
 		{
@@ -20,10 +20,16 @@
 				<td>@user.Id</td>
 				<td>@user.UserName</td>
 				<td>@user.Email</td>
-				<td><button type="button" class="btn btn-danger">ok</button></td>
+				<td>
+					@using (Html.BeginForm("Block", "Admin", FormMethod.Post, new { email = user.Email }))
+					{
+						<input type="hidden" value="@user.Email"  name="email"  />
+						<input type="submit"  value="Block"  class="btn btn-outline-danger" />
+					}
+				</td>
 			</tr>
 		}
-		@*}*@
 	</table>
+	<button class="btn btn-outline-primary" onclick="location.href='@Request.UrlReferrer'">bacK</button>
 </div>
 
