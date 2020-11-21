@@ -92,7 +92,7 @@ namespace PL.Areas.Admin.Controllers
         public ActionResult GetUsers()
         {
             var users = UserService.GetUsers();
-            return View(_mapper.Map <IEnumerable<UserDto>, IEnumerable<UserViewModel>>(users));
+            return View(_mapper.Map<IEnumerable<UserDto>, IEnumerable<UserViewModel>>(users));
         }
 
         public ActionResult Back()
@@ -100,11 +100,29 @@ namespace PL.Areas.Admin.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        public async Task<ActionResult> Block(string email)
+        [HttpPost]
+        public async Task<ActionResult> LockOrRemove(string email, string submit)
         {
-            await UserService.ChangeLockUserState(email);
+            switch (submit)
+            {
+                case "Remove":
+                    await UserService.RemoveUserAsync(email);
+                    return Redirect("/Admin/Admin/GetUsers/");
 
-            return Redirect("/Admin/Admin/GetUsers/");
+                case "Lock":
+                case "Unlock":
+                    if (email != null)
+                    {
+                        await UserService.ChangeLockUserState(email);
+
+                        return Redirect("/Admin/Admin/GetUsers/");
+                    }
+                    return Redirect("/Admin/Admin/");
+
+                default:
+                    return Redirect("Index");
+            }
+
         }
     }
 }

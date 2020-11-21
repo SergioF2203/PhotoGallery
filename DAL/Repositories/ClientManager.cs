@@ -11,7 +11,7 @@ namespace DAL.Repositories
 {
     public class ClientManager : IClientManager
     {
-        private PhotoGalleryContext _database;
+        private readonly PhotoGalleryContext _database;
 
         public ClientManager(PhotoGalleryContext db)
         {
@@ -41,5 +41,15 @@ namespace DAL.Repositories
             disposed = true;
         }
 
+        public async Task<ClientProfile> GetByIdAsync(string id)
+        {
+            return await _database.ClientProfiles.FindAsync(id);
+        }
+
+        public void Remove(ClientProfile item)
+        {
+            Task.Run(()=>_database.ClientProfiles.Remove(item));
+            _database.SaveChangesAsync();
+        }
     }
 }

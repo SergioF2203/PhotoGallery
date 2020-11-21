@@ -10,5 +10,7 @@ namespace DAL.Interfaces
     public interface IClientManager : IDisposable
     {
         void Create(ClientProfile item);
+        void Remove(ClientProfile item);
+        Task<ClientProfile> GetByIdAsync(string id);
     }
 }

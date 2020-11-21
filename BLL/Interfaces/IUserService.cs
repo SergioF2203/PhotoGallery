@@ -16,5 +16,6 @@ namespace BLL.Interfaces
         IEnumerable<UserDto> GetUsers();
         Task SetInitialData(UserDto adminDto, IEnumerable<string> roles);
         Task ChangeLockUserState(string email);
+        Task RemoveUserAsync(string email);
     }
 }

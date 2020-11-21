@@ -132,5 +132,20 @@ namespace BLL.Services
 
             await _unitOfWork.UserManager.UpdateAsync(user);
         }
+
+        /// <summary>
+        /// Remove User by email
+        /// </summary>
+        /// <param name="email">Useer's email to identiy user</param>
+        /// <returns></returns>
+        public async Task RemoveUserAsync(string email)
+        {
+            var user = await _unitOfWork.UserManager.FindByEmailAsync(email);
+
+            var clientProfile = await _unitOfWork.ClientManager.GetByIdAsync(user.Id);
+            _unitOfWork.ClientManager.Remove(clientProfile);
+
+            await _unitOfWork.UserManager.DeleteAsync(user);
+        }
     }
 }
