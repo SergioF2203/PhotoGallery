@@ -19,6 +19,7 @@ namespace PL.Models
 
         [Required]
         public bool IsLockOut { get; set; }
+        public string Role { get; set; }
 
     }
 }

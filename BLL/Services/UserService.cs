@@ -143,7 +143,11 @@ namespace BLL.Services
             var user = await _unitOfWork.UserManager.FindByEmailAsync(email);
 
             var clientProfile = await _unitOfWork.ClientManager.GetByIdAsync(user.Id);
-            _unitOfWork.ClientManager.Remove(clientProfile);
+
+            if (clientProfile != null)
+            {
+                await _unitOfWork.ClientManager.Remove(clientProfile);
+            }
 
             await _unitOfWork.UserManager.DeleteAsync(user);
         }

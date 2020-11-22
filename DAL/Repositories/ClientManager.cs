@@ -46,10 +46,11 @@ namespace DAL.Repositories
             return await _database.ClientProfiles.FindAsync(id);
         }
 
-        public void Remove(ClientProfile item)
+        public async Task Remove(ClientProfile item)
         {
-            Task.Run(()=>_database.ClientProfiles.Remove(item));
-            _database.SaveChangesAsync();
+            await Task.Run(()=>_database.ClientProfiles.Remove(item));
+
+            await _database.SaveChangesAsync();
         }
     }
 }
