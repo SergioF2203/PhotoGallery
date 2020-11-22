@@ -124,5 +124,10 @@ namespace PL.Areas.Admin.Controllers
             }
 
         }
+
+        public ActionResult LogOff()
+        {
+            return RedirectToAction("Index", "Home", new { area = "" });
+        }
     }
 }

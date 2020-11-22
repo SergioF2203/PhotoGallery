@@ -50,7 +50,6 @@ namespace BLL.Services
         {
             var roles = _unitOfWork.RoleManager.Roles;
 
-
             return _autoMap.Map<IEnumerable<ApplicationRole>, IEnumerable<RoleDto>>(roles);
         }
 
@@ -77,5 +76,9 @@ namespace BLL.Services
             }
         }
 
+        public IEnumerable<UserDto> GetUsersByRole(RoleDto roleDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace BLL.Interfaces
         Task<OperationDetails> Create(string name);
         IEnumerable<RoleDto> GetRoles();
         Task<RoleDto> GetRoleById(string id);
+        IEnumerable<UserDto> GetUsersByRole(RoleDto roleDto);
 
     }
 }
