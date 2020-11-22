@@ -14,6 +14,7 @@ namespace BLL.Interfaces
         IEnumerable<RoleDto> GetRoles();
         Task<RoleDto> GetRoleById(string id);
         Task<RoleDto> FindRoleByName(string name);
+        Task Remove(string name);
         IEnumerable<UserDto> GetUsersByRole(RoleDto roleDto);
 
     }

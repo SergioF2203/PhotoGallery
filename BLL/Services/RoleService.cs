@@ -91,7 +91,18 @@ namespace BLL.Services
            var role = await _unitOfWork.RoleManager.FindByNameAsync(name);
 
             return _autoMap.Map<ApplicationRole, RoleDto>(role);
+        }
 
+        /// <summary>
+        /// Remove a role
+        /// </summary>
+        /// <param name="name">Role's name</param>
+        /// <returns></returns>
+        public async Task Remove(string name)
+        {
+            var role = await _unitOfWork.RoleManager.FindByNameAsync(name);
+            await _unitOfWork.RoleManager.DeleteAsync(role);
+            await _unitOfWork.SaveASync();
         }
     }
 }

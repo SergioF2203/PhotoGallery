@@ -16,21 +16,52 @@
 		<tr>
 			<td>@item.Name</td>
 			<td class="row">
+
 				@using (Html.BeginForm(null, null, FormMethod.Post, new { name = item.Name }))
 				{
 					<input type="hidden" value="@item.Name" name="roleName" />
 					<input type="submit" class="btn btn-outline-primary" value="Edit User's List" disabled="disabled" />
 				}
+
 				@using (Html.BeginForm("EditRole", "Admin", FormMethod.Post, new { name = item.Name, style = "margin-left: 5px; margin-right: 5px" }))
 				{
 					<input type="hidden" value="@item.Name" name="roleName" />
 					<input type="submit" class="btn btn-outline-warning" value="Edit" name="submit" />
 				}
-				@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = item.Name }))
+				<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Name">Remove</button>
+
+
+				<!-- Model Remove a Role -->
+				<div class="modal fade" id="Remove_staticBackdrop_@item.Name" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="staticBackdropLabel">Remove Account</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								Are you sure you want to remove @item.Name role?
+							</div>
+							<div class="modal-footer">
+								@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = item.Name }))
+								{
+									<input type="hidden" value="@item.Name" name="roleName" />
+									<input type="submit" class="btn btn-danger" value="Remove" name="submit" />
+								}
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				@*@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = item.Name }))
 				{
 					<input type="hidden" value="@item.Name" name="roleName" />
 					<input type="submit" class="btn btn-outline-danger" value="Remove" name="submit" />
-				}
+				}*@
 
 
 			</td>

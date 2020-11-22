@@ -78,7 +78,8 @@ namespace PL.Areas.Admin.Controllers
                 case "Add":
                     if (!ModelState.IsValid)
                     {
-                        return View("Error");
+                        ModelState.AddModelError(string.Empty, "The data is not valid");
+                        return View(model);
                     }
                     await RoleService.Create(model.Name);
                     return RedirectToAction("GetRoles");
@@ -125,9 +126,10 @@ namespace PL.Areas.Admin.Controllers
 
         }
 
-        public async Task<ActionResult> EditRole(string roleName)
+        public async Task<ActionResult> RemoveRole(string roleName)
         {
-            var role = await RoleService.FindRoleByName(roleName);
+            await RoleService.Remove(roleName);
+            return Redirect("/Admin/Admin/GetRoles/");
         }
 
         public ActionResult LogOff()

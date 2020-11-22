@@ -10,6 +10,7 @@ namespace PL.Models
     public class RoleViewModel
     {
         [Required]
+        [RegularExpression(@"^\S*$", ErrorMessage = "No white space allowed")]
         public string Name { get; set; }
     }
 }
