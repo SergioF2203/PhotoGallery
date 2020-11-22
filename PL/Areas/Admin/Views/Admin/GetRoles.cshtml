@@ -15,13 +15,24 @@
 	{
 		<tr>
 			<td>@item.Name</td>
-			<td>
-				@using (Html.BeginForm())
+			<td class="row">
+				@using (Html.BeginForm(null, null, FormMethod.Post, new { name = item.Name }))
 				{
+					<input type="hidden" value="@item.Name" name="roleName" />
 					<input type="submit" class="btn btn-outline-primary" value="Edit User's List" disabled="disabled" />
-					<input type="submit" class="btn btn-outline-danger" value="Remove" />
-
 				}
+				@using (Html.BeginForm("EditRole", "Admin", FormMethod.Post, new { name = item.Name, style = "margin-left: 5px; margin-right: 5px" }))
+				{
+					<input type="hidden" value="@item.Name" name="roleName" />
+					<input type="submit" class="btn btn-outline-warning" value="Edit" name="submit" />
+				}
+				@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = item.Name }))
+				{
+					<input type="hidden" value="@item.Name" name="roleName" />
+					<input type="submit" class="btn btn-outline-danger" value="Remove" name="submit" />
+				}
+
+
 			</td>
 		</tr>
 	}

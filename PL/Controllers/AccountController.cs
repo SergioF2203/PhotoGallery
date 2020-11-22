@@ -72,10 +72,10 @@ namespace PL.Controllers
 
                     }, claims);
 
-                    foreach(var item in claims.Claims)
+                    foreach (var item in claims.Claims)
                     {
-                        if(item.Value == "admin")
-                           return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                        if (item.Value == "admin")
+                            return RedirectToAction("Index", "Admin", new { area = "Admin" });
                     }
 
                 }
@@ -146,7 +146,7 @@ namespace PL.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new UserDto { Email = model.Email, UserName = model.Email, Password = model.Password, Role = "user" };
+                var user = new UserDto { Email = model.Email, UserName = model.Email, Password = model.Password };
                 OperationDetails res = await UserService.Create(user);
 
                 if (res.Succeeded)
@@ -381,7 +381,7 @@ namespace PL.Controllers
 
         //
         //POST: /Account/LogOff
-       [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
@@ -419,7 +419,8 @@ namespace PL.Controllers
                 UserName = "admin@email.com",
                 Password = "qqqqqq",
                 Name = "admin",
-                Role = "admin"
+                Roles = new List<string>() { "admin" }
+
             }, new List<string> { "admin", "user" });
         }
 

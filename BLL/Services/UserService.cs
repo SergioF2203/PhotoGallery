@@ -22,7 +22,11 @@ namespace BLL.Services
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDto>().ForMember(u => u.IsLockOut, opt => opt.MapFrom(src => src.LockoutEnabled)).ReverseMap());
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDto>()
+                .ForMember(u => u.IsLockOut, opt => opt.MapFrom(src => src.LockoutEnabled))
+                .ForMember(u => u.Roles, opt => opt.MapFrom(src => src.Roles.Select(r => r.RoleId)))
+                .ReverseMap());
+
             _mapper = new Mapper(config);
         }
 
@@ -59,7 +63,7 @@ namespace BLL.Services
                 if (result.Errors.Any())
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
 
-                await _unitOfWork.UserManager.AddToRoleAsync(user.Id, userDto.Role);
+                await _unitOfWork.UserManager.AddToRoleAsync(user.Id, "user");
 
                 var clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
                 _unitOfWork.ClientManager.Create(clientProfile);
@@ -75,9 +79,31 @@ namespace BLL.Services
 
         public IEnumerable<UserDto> GetUsers()
         {
-            var users = _unitOfWork.UserManager.Users;
+            var users = _unitOfWork.UserManager.Users.ToList();
 
-            return _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<UserDto>>(users);
+            var userDtos = _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<UserDto>>(users);
+
+            var roles = _unitOfWork.RoleManager.Roles.ToList();
+
+
+            foreach (var userDto in userDtos)
+            {
+                var tempRoleName = new List<string>();
+
+                foreach (var rolefromDto in userDto.Roles)
+                {
+                    foreach (var role in roles)
+                    {
+                        if (rolefromDto == role.Id)
+                            tempRoleName.Add(role.Name);
+                    }
+                }
+
+                userDto.Roles = tempRoleName;
+            }
+
+            return userDtos;
+
         }
 
         public async Task SetInitialData(UserDto adminDto, IEnumerable<string> roles)

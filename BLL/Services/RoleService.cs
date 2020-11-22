@@ -80,5 +80,18 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Get Role
+        /// </summary>
+        /// <param name="name">Role's name</param>
+        /// <returns>Role Data Transfer Object</returns>
+        public async Task<RoleDto> FindRoleByName(string name)
+        {
+           var role = await _unitOfWork.RoleManager.FindByNameAsync(name);
+
+            return _autoMap.Map<ApplicationRole, RoleDto>(role);
+
+        }
     }
 }

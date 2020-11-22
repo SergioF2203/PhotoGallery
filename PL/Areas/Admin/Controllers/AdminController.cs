@@ -125,6 +125,11 @@ namespace PL.Areas.Admin.Controllers
 
         }
 
+        public async Task<ActionResult> EditRole(string roleName)
+        {
+            var role = await RoleService.FindRoleByName(roleName);
+        }
+
         public ActionResult LogOff()
         {
             return RedirectToAction("Index", "Home", new { area = "" });
