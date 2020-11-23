@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class BaseEntity
+    public class Album
     {
         [Required]
         public string Id { get; set; }
+        [Required]
+        public string AlbumName { get; set; }
+        public ICollection<Photo> Photos { get; set; } = new List<Photo>();
     }
 }

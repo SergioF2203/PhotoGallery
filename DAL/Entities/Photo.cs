@@ -16,10 +16,14 @@ namespace DAL.Entities
         public string PhotoTitle { get; set; }
         public DateTime DateTimeUploading { get; set; }
         public Raiting Raiting { get; set; }
-        public Album Album { get; set; }
         public ExifData ExifData { get; set; }
+        public bool IsPublish { get; set; }
 
-        public int UserId { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+
+        public ICollection<Album> Albums { get; set; } = new List<Album>();
+
     }
 
     public class Raiting
@@ -28,10 +32,6 @@ namespace DAL.Entities
         public float CurrentRaiting { get; set; }
     }
 
-    public class Album
-    {
-        public string AlbumName { get; set; }
-    }
 
     public class ExifData
     {
