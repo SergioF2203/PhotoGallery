@@ -1,7 +1,7 @@
 <h1>Photo Gallery Web App 📸</h1>
 
 
-<h5>Application designed to store and publish photographs.</h5>
+<h5>Application designed to store and publish photos.</h5>
 
 
 There are three roles in the application: Guest, User, and Admin by default.
