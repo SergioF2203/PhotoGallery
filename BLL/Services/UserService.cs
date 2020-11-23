@@ -22,6 +22,7 @@ namespace BLL.Services
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<ApplicationUser, UserDto>()
                 .ForMember(u => u.IsLockOut, opt => opt.MapFrom(src => src.LockoutEnabled))
                 .ForMember(u => u.Roles, opt => opt.MapFrom(src => src.Roles.Select(r => r.RoleId)))
@@ -176,6 +177,51 @@ namespace BLL.Services
             }
 
             await _unitOfWork.UserManager.DeleteAsync(user);
+        }
+
+        /// <summary>
+        /// Returns user by Id
+        /// </summary>
+        /// <param name="id">User's id</param>
+        /// <returns></returns>
+        public UserDto FindById(string id)
+        {
+            var user = _unitOfWork.UserManager.FindById(id);
+
+            return _mapper.Map<ApplicationUser, UserDto>(user);
+        }
+
+        /// <summary>
+        /// Changes old password users' account to new password
+        /// </summary>
+        /// <param name="userId">User's id</param>
+        /// <param name="oldPassword">Old account's password</param>
+        /// <param name="newPassword">New account's passwords</param>
+        /// <returns></returns>
+        public async Task<OperationDetails> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
+        {
+            var user = await _unitOfWork.UserManager.FindByIdAsync(userId); //????
+            //var result = await _unitOfWork.UserManager.ChangePasswordAsync(userId, oldPassword, newPassword);
+            var result = _unitOfWork.UserManager.ChangePassword(userId, oldPassword, newPassword);
+
+
+            if (result.Succeeded)
+            {
+                return new OperationDetails(true, "Change Password Success!", userId);
+            }
+            return new OperationDetails(false, result.Errors.FirstOrDefault(), "Password");
+        }
+
+        /// <summary>
+        /// Get an user by Id asynchronously
+        /// </summary>
+        /// <param name="id">User's Id</param>
+        /// <returns></returns>
+        public async Task<UserDto> FindByIdAsync(string id)
+        {
+            var user = await  _unitOfWork.UserManager.FindByIdAsync(id);
+
+            return _mapper.Map<ApplicationUser, UserDto>(user);
         }
     }
 }

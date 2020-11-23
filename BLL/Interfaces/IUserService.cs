@@ -17,5 +17,8 @@ namespace BLL.Interfaces
         Task SetInitialData(UserDto adminDto, IEnumerable<string> roles);
         Task ChangeLockUserState(string email);
         Task RemoveUserAsync(string email);
+        Task<OperationDetails> ChangePasswordAsync(string userId, string oldPassword, string newPassword);
+        UserDto FindById(string id);
+        Task<UserDto> FindByIdAsync(string id);
     }
 }
