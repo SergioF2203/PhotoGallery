@@ -24,4 +24,7 @@ register as User;
 <li>
 rate photos of other users that are published;
 </li>
+<li>
+collect pics into albums inside of the account
+</li>
 </ul>
