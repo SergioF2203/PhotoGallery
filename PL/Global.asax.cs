@@ -22,10 +22,10 @@ namespace PL
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //NinjectModule userModule = new UserModule();
-            //NinjectModule serviceModule = new ServiceModule("DefaultConnection");
-            //var kernel = new StandardKernel(userModule, serviceModule);
-            //DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            NinjectModule userModule = new UserModule();
+            NinjectModule serviceModule = new ServiceModule("DefaultConnection");
+            var kernel = new StandardKernel(userModule, serviceModule);
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }

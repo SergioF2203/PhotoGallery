@@ -19,6 +19,8 @@ namespace DAL.Repositories
         private readonly ApplicationRoleManager roleManager;
         private readonly IClientManager clientManager;
 
+        private readonly IPhotoRepository photoRepository;
+
         public IdentityUnitOfWork(string connectionString)
         {
             db = new PhotoGalleryContext(connectionString);
@@ -26,6 +28,9 @@ namespace DAL.Repositories
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
             clientManager = new ClientManager(db);
         }
+
+        public IPhotoRepository PhotoRepository => photoRepository ?? new PhotoRepository(db);
+
         public ApplicationUserManager UserManager => userManager;
 
         public IClientManager ClientManager => clientManager;

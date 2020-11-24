@@ -13,7 +13,9 @@ namespace BLL
     {
         public AutoMap()
         {
-            CreateMap<ApplicationRole, RoleDto>();
+            //CreateMap<ApplicationRole, RoleDto>();
+
+            CreateMap<Photo, PhotoDto>().ReverseMap();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace DAL.Interfaces
         ApplicationUserManager UserManager { get; }
         IClientManager ClientManager { get; }
         ApplicationRoleManager RoleManager { get; }
+
+        IPhotoRepository PhotoRepository { get; }
         Task SaveASync();
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using AutoMapper;
 using BLL.Models;
+using DAL.Entities;
 using PL.Models;
 
 namespace PL
@@ -12,6 +13,7 @@ namespace PL
     {
         public AutomapperProfile()
         {
+
             //CreateMap<CustomUser, UserModel>().ForMember(dest => dest.UserModelEmail, opt => opt.MapFrom(src => src.UserEmail));
 
             //CreateMap<UserModel, UserViewModel>()
@@ -19,6 +21,8 @@ namespace PL
             //    .ForMember(dest => dest.UserViewModelId, opt => opt.MapFrom(src => src.Id))
             //    .ForMember(dest => dest.UserViewModelImagePath, opt => opt.MapFrom(src => src.UserImagePath))
             //    .ForMember(dest => dest.UserViewModelName, opt => opt.MapFrom(src => src.UserName)).ReverseMap();
+
+
         }
     }
 }

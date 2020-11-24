@@ -61,7 +61,7 @@ namespace BLL.Services
             return _autoMap.Map<ApplicationRole, RoleDto>(role);
         }
 
-        private readonly bool disposed = false;
+        private bool disposed = false;
         public void Dispose()
         {
             Dispose(true);
@@ -74,6 +74,8 @@ namespace BLL.Services
             {
                 _unitOfWork.Dispose();
             }
+
+            disposed = true;
         }
 
         public IEnumerable<UserDto> GetUsersByRole(RoleDto roleDto)

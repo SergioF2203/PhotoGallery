@@ -24,6 +24,7 @@ namespace PL.Controllers
         } 
 
         public RoleController() {
+
             var config = new MapperConfiguration(cfg => cfg.CreateMap<RoleDto, RoleViewModel>());
             _mapper = new Mapper(config);
         }

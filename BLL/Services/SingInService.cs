@@ -17,7 +17,7 @@ namespace BLL.Services
             _unitOfWork = unitOfWork;
         }
 
-        private readonly bool disposed = false;
+        private bool disposed = false;
         public void Dispose()
         {
             Dispose(true);
@@ -30,6 +30,8 @@ namespace BLL.Services
             {
                 _unitOfWork.Dispose();
             }
+
+            disposed = true;
         }
     }
 }

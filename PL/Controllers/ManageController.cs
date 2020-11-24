@@ -17,9 +17,6 @@ namespace PL.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        //private ApplicationSignInManager _signInManager;
-        //private ApplicationUserManager _userManager;
-
         private IUserService UserService
         {
             get
@@ -75,14 +72,9 @@ namespace PL.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
-            var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
-                //PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                //TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                //Logins = await UserManager.GetLoginsAsync(userId),
-                //BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
         }

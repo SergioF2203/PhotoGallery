@@ -10,7 +10,7 @@ namespace DAL.Entities
     public class Album
     {
         [Required]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         [Required]
         public string AlbumName { get; set; }
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();

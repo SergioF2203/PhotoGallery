@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index Gallery Page </h2>
+
+@using (Html.BeginForm("AddPhoto", "Gallery", FormMethod.Get)) 
+{
+    <input type="submit" value="Add Photo" class="btn btn-outline-light"/>
+}
+
