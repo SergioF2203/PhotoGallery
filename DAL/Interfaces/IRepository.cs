@@ -11,7 +11,7 @@ namespace DAL.Interfaces
     {
         IQueryable<TEntity> FindAll();
         Task<TEntity> FindByIdAsync(string id);
-        Task AddAsync(TEntity entity);
+        void AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task RemoveAsync(TEntity entity);
 

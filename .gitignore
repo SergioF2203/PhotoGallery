@@ -13,6 +13,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+#Custom Folder
+Upload/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

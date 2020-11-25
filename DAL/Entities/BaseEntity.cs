@@ -9,7 +9,6 @@ namespace DAL.Entities
 {
     public class BaseEntity
     {
-        [Required]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

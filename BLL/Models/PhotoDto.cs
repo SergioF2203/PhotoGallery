@@ -12,5 +12,8 @@ namespace BLL.Models
         public string PhotoName { get; set; }
         public string PhotoTitle { get; set; }
         public DateTime DateTimeUploading { get; set; }
+        public string PhotoPath { get; set; }
+        public bool IsPublish { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

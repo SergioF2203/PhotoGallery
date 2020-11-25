@@ -41,6 +41,9 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult AddPhoto(HttpPostedFileBase file)
         {
+            var fileName = string.Empty;
+            var path = string.Empty;
+
             if (file != null)
             {
                 var fileSize = file.ContentLength;
@@ -69,9 +72,9 @@ namespace PL.Controllers
                     return View();
                 }
 
-                var fileName = Path.GetFileName(file.FileName);
+                fileName = Path.GetFileName(file.FileName);
                 var dirPath = Path.Combine(Server.MapPath("~/Upload/"), User.Identity.GetUserId());
-                var path = Path.Combine(dirPath, fileName);
+                path = Path.Combine(dirPath, fileName);
 
                 if (Directory.Exists(dirPath))
                 {
@@ -91,6 +94,9 @@ namespace PL.Controllers
                     file.SaveAs(path);
                 }
             }
+
+            var pic = new PhotoDto() { Id = Guid.NewGuid().ToString(), PhotoName = fileName, DateTimeUploading = DateTime.Now, PhotoPath = path, IsPublish = false, CreateDate = DateTime.Now };
+            _photoService.AddAsync(pic);
 
             ViewBag.StatusMessage = "File successfully uploaded!";
             return View();
