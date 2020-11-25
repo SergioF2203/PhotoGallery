@@ -1,13 +1,18 @@
-﻿ @model PL.Models.PhotoAddViewModel
+﻿@model PL.Models.PhotoAddViewModel
 @{
-    ViewBag.Title = "AddPhoto";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "AddPhoto";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>AddPhoto Page</h2>
 
-@using (Html.BeginForm("AddPhoto", "Gallery", FormMethod.Post)) 
+<p class="text-success">@ViewBag.StatusMessage</p>
+@using (Html.BeginForm("AddPhoto", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.TextBoxFor(m=>m.Path, new { type = "file" })
+	@Html.ValidationSummary("", new { @class = "text-danger" })
+
+	@*@Html.TextBoxFor(m=>m.Name, new { type = "file" })*@
+	<input type="file" name="file" />
+	<input type="submit" , value="Upload" class="btn btn-outline-dark" />
 }
 
