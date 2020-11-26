@@ -46,6 +46,7 @@ manage roles
 <li>
 blocking user's authentification
 </li>
+<li>moderate users' photos</li>
 </ul>
 
 Each photo can be:
