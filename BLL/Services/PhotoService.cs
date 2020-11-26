@@ -18,16 +18,36 @@ namespace BLL.Services
         private readonly IUnitOfWork _unitOfwork;
         private readonly Mapper _mapper;
 
-        public PhotoService(IUnitOfWork unitOfWork/*, Mapper mapper*/)
+        public PhotoService(IUnitOfWork unitOfWork)
         {
             _unitOfwork = unitOfWork;
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Photo, PhotoDto>().ForMember(p=>p.CreateDate, c=>c.MapFrom(src => src.ExifData.CreateDate)).ReverseMap()));
-            //_mapper = mapper;
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Photo, PhotoDto>().ReverseMap()));
         }
-        public void AddAsync(PhotoDto model)
+        public async Task AddAsync(PhotoDto model)
         {
             _unitOfwork.PhotoRepository.AddAsync(_mapper.Map<PhotoDto, Photo>(model));
-            //_unitOfwork.SaveASync();
+            await _unitOfwork.SaveASync();
+        }
+
+        public async Task<PhotoDto> GetPhotoByIdAsync(string id)
+        {
+            var photo = await _unitOfwork.PhotoRepository.FindByIdAsync(id);
+
+            return _mapper.Map<Photo, PhotoDto>(photo);
+        }
+
+        public IEnumerable<string> GelAllPhotosPaths()
+        {
+            var photos = _unitOfwork.PhotoRepository.FindAll().ToList();
+
+            return _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos).Select(p=>p.PhotoPath);
+        }
+
+        public IEnumerable<string> GetPathsPublishPhoto()
+        {
+            var photos = _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(_unitOfwork.PhotoRepository.GetPublishPhotos());
+
+            return photos.Select(p => p.PhotoPath);
         }
 
 

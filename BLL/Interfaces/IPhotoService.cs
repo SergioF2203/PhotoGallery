@@ -11,8 +11,11 @@ namespace BLL.Interfaces
 {
     public interface IPhotoService : IDisposable
     {
-        void AddAsync(PhotoDto model);
+        Task AddAsync(PhotoDto model);
 
+        Task<PhotoDto> GetPhotoByIdAsync(string id);
+        IEnumerable<string> GetPathsPublishPhoto();
+        IEnumerable<string> GelAllPhotosPaths();
 
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -20,7 +21,7 @@ namespace PL.Controllers
         {
             _photoService = photoService;
 
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PhotoAddViewModel, PhotoDto>()
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<AddPhotoViewModel, PhotoDto>()
             .ForMember(dest => dest.PhotoName, opt => opt.MapFrom(src => src.Name))
             .ReverseMap()));
 
@@ -95,10 +96,23 @@ namespace PL.Controllers
                 }
             }
 
-            var pic = new PhotoDto() { Id = Guid.NewGuid().ToString(), PhotoName = fileName, DateTimeUploading = DateTime.Now, PhotoPath = path, IsPublish = false, CreateDate = DateTime.Now };
+            var pic = new PhotoDto() { Id = Guid.NewGuid().ToString(), PhotoName = fileName, DateTimeUploading = DateTime.Now, PhotoPath = path, IsPublish = false };
             _photoService.AddAsync(pic);
 
             ViewBag.StatusMessage = "File successfully uploaded!";
+            return View();
+        }
+
+        public ActionResult GetPhoto()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GetPhoto(GetPhotoViewModel model)
+        {
+            var temp = await _photoService.GetPhotoByIdAsync(model.Id);
+
             return View();
         }
     }

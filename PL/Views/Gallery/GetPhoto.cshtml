@@ -1,0 +1,16 @@
+﻿@model PL.Models.GetPhotoViewModel
+
+@{
+	ViewBag.Title = "GetPhoto";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetPhoto</h2>
+
+@using (Html.BeginForm("GetPhoto", "Gallery", FormMethod.Post))
+{
+	@Html.LabelFor(p=>p.Id)
+	@Html.TextBoxFor(p=>p.Id)
+	<input type="submit" value="send"/>
+}
+

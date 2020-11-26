@@ -20,9 +20,9 @@ namespace DAL.Repositories
         
         public void AddAsync(Photo entity)
         {
-           var temp =  _context.Photos.Add(entity);
-            _context.SaveChanges();
+            _context.Photos.Add(entity);
         }
+
 
         public IQueryable<Photo> FindAll()
         {
@@ -34,11 +34,26 @@ namespace DAL.Repositories
             return await _context.Photos.FindAsync(id);
         }
 
+        public IEnumerable<Photo> GetPublishPhotos()
+        {
+            return  _context.Photos.Where(p => p.IsPublish);
+        }
+
+        public IEnumerable<Photo> GetPhotoByRating()
+        {
+            return _context.Photos.OrderByDescending(p => p.Raiting);
+        }
+
         public async Task RemoveAsync(Photo entity)
         {
             var photo = await FindByIdAsync((entity.Id).ToString());
 
             await Task.Run(()=>_context.Photos.Remove(photo));
+        }
+
+        public IEnumerable<Photo> GetPhotosById(string id)
+        {
+            return _context.Photos.Where(p => p.Id == id).ToList();
         }
 
         public Task UpdateAsync(Photo entity)
