@@ -46,4 +46,16 @@ manage roles
 <li>
 blocking user's authentification
 </li>
+<li>moderate users' photos</li>
+</ul>
+
+Each photo can be:
+
+</n>
+🖼️<b>PHOTO:</b>
+<ul>
+<li>
+photo is rated by users
+</li>
+<li>published or not</li>
 </ul>
