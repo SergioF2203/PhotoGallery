@@ -8,6 +8,7 @@ using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using PL.Models;
 
 namespace PL.Areas.Admin.Controllers
@@ -137,7 +138,17 @@ namespace PL.Areas.Admin.Controllers
 
         public ActionResult LogOff()
         {
+            AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home", new { area = "" });
         }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
     }
 }

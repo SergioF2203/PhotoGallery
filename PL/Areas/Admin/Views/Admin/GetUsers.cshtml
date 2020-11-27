@@ -18,9 +18,10 @@
 					<th>User's Email</th>
 					<th>User's Roles</th>
 					</thead>
-					@foreach (var user in Model)
-					{
-						<tbody>
+					<tbody>
+						@foreach (var user in Model)
+						{
+
 							<tr>
 								<td>@user.Id</td>
 								<td>@user.UserName</td>
@@ -36,7 +37,7 @@
 									@if (user.IsLockOut)
 									{
 										<button type="button" rel="tooltip" title="Unlock" data-target="#staticBackdrop_@user.Id" class="btn btn-primary btn-link btn-sm" data-toggle="modal">
-											<i class="material-icons">lock</i><p>Lock</p>
+											<i class="material-icons">lock</i><p style="margin-bottom: auto">Lock</p>
 										</button>
 									}
 									else
@@ -109,8 +110,8 @@
 
 								</td>
 							</tr>
-						</tbody>
-					}
+						}
+					</tbody>
 				</table>
 			</div>
 		</div>
