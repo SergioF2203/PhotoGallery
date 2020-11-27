@@ -125,65 +125,6 @@
 												</div>
 											</div>
 										</div>
-
-
-										<!-- Model Lock\Unlock User's acoount -->
-										@*<div class="modal fade" id="staticBackdrop_@Model.Item1.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="staticBackdropLabel">Lock/Unlock Account</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														Are you sure you want to change a lock state @Model.Item1.UserName account?
-													</div>
-													<div class="modal-footer">
-														@using (Html.BeginForm("LockOrRemove", "Admin", FormMethod.Post, new { email = user.Email }))
-														{
-															<input type="hidden" value="@user.Email" name="email" />
-															if (user.IsLockOut)
-															{
-																<input type="submit" value="Unlock" class="btn btn-danger" name="submit" />
-															}
-															else
-															{
-																<input type="submit" value="Lock" class="btn btn-outline-danger" name="submit" />
-															}
-														}
-														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													</div>
-												</div>
-											</div>
-										</div>*@
-
-										<!-- Model Remove User's account -->
-										@*<div class="modal fade" id="Remove_staticBackdrop_@user.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="staticBackdropLabel">Remove Account</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														Are you sure you want to remove @user.UserName account?
-													</div>
-													<div class="modal-footer">
-														@using (Html.BeginForm("LockOrRemove", "Admin", FormMethod.Post, new { email = user.Email }))
-														{
-															<input type="hidden" value="@user.Email" name="email" />
-															<input type="submit" value="Remove" name="submit" class="btn btn-warning" />
-														}
-														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													</div>
-												</div>
-											</div>
-										</div>*@
-
 									</td>
 								</tr>
 							</tbody>

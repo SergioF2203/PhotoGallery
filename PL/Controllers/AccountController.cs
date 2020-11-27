@@ -46,39 +46,42 @@ namespace PL.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, string submit)
         {
-            await SetInitialData();
-
-            if (ModelState.IsValid)
+            if (submit == "Log In")
             {
-                var userDto = new UserDto { Email = model.Email, Password = model.Password };
-                ClaimsIdentity claims = await UserService.Authenticate(userDto);
+                await SetInitialData();
 
-                if (claims is null)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError(string.Empty, "Login or Password is incorrect or Your account is blocked");
-                    return View(model);
-                }
-                else
-                {
-                    AuthenticationManager.SignOut();
+                    var userDto = new UserDto { Email = model.Email, Password = model.Password };
+                    ClaimsIdentity claims = await UserService.Authenticate(userDto);
 
-
-
-                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    if (claims is null)
                     {
-                        IsPersistent = true
-
-                    }, claims);
-
-                    foreach (var item in claims.Claims)
-                    {
-                        if (item.Value == "admin")
-                            return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                        ModelState.AddModelError(string.Empty, "Login or Password is incorrect or Your account is blocked");
+                        return View(model);
                     }
+                    else
+                    {
+                        AuthenticationManager.SignOut();
 
-                }
+
+
+                        AuthenticationManager.SignIn(new AuthenticationProperties
+                        {
+                            IsPersistent = true
+
+                        }, claims);
+
+                        foreach (var item in claims.Claims)
+                        {
+                            if (item.Value == "admin")
+                                return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                        }
+
+                    }
+                } 
             }
 
             return RedirectToAction("Index", "Home");
@@ -140,30 +143,31 @@ namespace PL.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, string submit)
         {
-            await SetInitialData();
 
-            if (ModelState.IsValid)
+            if (submit == "Register")
             {
-                var user = new UserDto { Email = model.Email, UserName = model.Email, Password = model.Password };
-                OperationDetails res = await UserService.Create(user);
+                await SetInitialData();
 
-                if (res.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var user = new UserDto { Email = model.Email, UserName = model.Email, Password = model.Password };
+                    OperationDetails res = await UserService.Create(user);
 
-                    return RedirectToAction("Index", "Home");
+                    if (res.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    ModelState.AddModelError(res.Property, res.Message);
                 }
-                ModelState.AddModelError(res.Property, res.Message);
+
+                // If we got this far, something failed, redisplay form
+                return View(model);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            return RedirectToAction("Index", "Home");
         }
 
         //
