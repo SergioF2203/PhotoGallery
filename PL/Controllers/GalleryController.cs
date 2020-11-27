@@ -33,6 +33,16 @@ namespace PL.Controllers
             return View();
         }
 
+        public ActionResult UserGallery()
+        {
+            return View();
+        }
+
+        public ActionResult UserAlbum()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult AddPhoto()
         {

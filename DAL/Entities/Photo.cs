@@ -14,7 +14,6 @@ namespace DAL.Entities
         public string PhotoTitle { get; set; }
         public DateTime DateTimeUploading { get; set; } = default;
         public Raiting Raiting { get; set; } = new Raiting();
-        //public ExifData ExifData { get; set; } = new ExifData();
         public bool IsPublish { get; set; }
 
         public string ApplicationUserId { get; set; }
@@ -29,13 +28,4 @@ namespace DAL.Entities
         public int VoicesCount { get; set; } = 0;
         public float CurrentRaiting { get; set; } = 0;
     }
-
-
-    //public class ExifData
-    //{
-    //    public int? Width { get; set; }
-    //    public int? Height { get; set; }
-    //    public DateTime CreateDate { get; set; } = default;
-
-    //}
 }

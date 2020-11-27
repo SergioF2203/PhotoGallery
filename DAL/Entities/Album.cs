@@ -13,6 +13,7 @@ namespace DAL.Entities
         public Guid Id { get; set; }
         [Required]
         public string AlbumName { get; set; }
+        public string ImagePath { get; set; }
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
     }
 }

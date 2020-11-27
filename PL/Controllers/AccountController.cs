@@ -48,7 +48,7 @@ namespace PL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, string submit)
         {
-            if (submit == "Log In")
+            if (submit == "Log in")
             {
                 await SetInitialData();
 
@@ -84,7 +84,7 @@ namespace PL.Controllers
                 } 
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("UserGallery", "Gallery");
         }
 
         //
