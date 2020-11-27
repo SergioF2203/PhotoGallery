@@ -9,6 +9,7 @@ using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using PL.Models;
 
 namespace PL.Controllers
@@ -125,5 +126,20 @@ namespace PL.Controllers
 
             return View();
         }
+
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
     }
 }

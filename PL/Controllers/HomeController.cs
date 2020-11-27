@@ -8,10 +8,12 @@ namespace PL.Controllers
 {
     public class HomeController : Controller
     {
-        //private PhotoGalleryContext db = new PhotoGalleryContext();
         public ActionResult Index()
         {
-
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("UserGallery", "Gallery");
+            }
             return View();
         }
 
