@@ -93,6 +93,9 @@ namespace PL.Areas.Admin.Controllers
         public ActionResult GetUsers()
         {
             var users = UserService.GetUsers();
+
+            ViewBag.Item = "Users";
+
             return View(_mapper.Map<IEnumerable<UserDto>, IEnumerable<UserViewModel>>(users));
         }
 
