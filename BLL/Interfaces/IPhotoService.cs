@@ -16,7 +16,7 @@ namespace BLL.Interfaces
 
         Task<PhotoDto> GetPhotoByIdAsync(string id);
         IEnumerable<string> GetPathsPublishPhoto();
-        Task<IEnumerable<string>> GelAllPhotosPaths();
+        IEnumerable<string> GelAllPhotosPaths(string id);
 
 
 

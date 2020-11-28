@@ -64,13 +64,26 @@ namespace BLL.Services
                 if (result.Errors.Any())
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), string.Empty);
 
-                await _unitOfWork.UserManager.AddToRoleAsync(user.Id, "user");
+                if (userDto.Roles is null)
+                {
+                    await _unitOfWork.UserManager.AddToRoleAsync(user.Id, "user");
 
-                var clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
-                _unitOfWork.ClientManager.Create(clientProfile);
-                await _unitOfWork.SaveASync();
+                    var clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
+                    _unitOfWork.ClientManager.Create(clientProfile);
+                    await _unitOfWork.SaveASync();
 
-                return new OperationDetails(true, "Registration Success!", string.Empty);
+                    return new OperationDetails(true, "Registration Success!", string.Empty);
+                }
+                else
+                {
+                    await _unitOfWork.UserManager.AddToRoleAsync(user.Id, "admin");
+
+                    var clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name };
+                    _unitOfWork.ClientManager.Create(clientProfile);
+                    await _unitOfWork.SaveASync();
+
+                    return new OperationDetails(true, "Registration Success!", string.Empty);
+                }
             }
             else
             {
@@ -176,6 +189,15 @@ namespace BLL.Services
                 await _unitOfWork.ClientManager.Remove(clientProfile);
             }
 
+            var userPhotos = _unitOfWork.PhotoRepository.FindAll().Where(p => p.ApplicationUserId == user.Id).ToList();
+            if (userPhotos != null)
+            {
+                foreach (var item in userPhotos)
+                {
+                    await _unitOfWork.PhotoRepository.RemoveAsync(item);
+                }
+            }
+
             await _unitOfWork.UserManager.DeleteAsync(user);
         }
 
@@ -216,10 +238,22 @@ namespace BLL.Services
         /// Get an user by Id asynchronously
         /// </summary>
         /// <param name="id">User's Id</param>
-        /// <returns></returns>
+        /// <returns>UserDto entity</returns>
         public async Task<UserDto> FindByIdAsync(string id)
         {
-            var user = await  _unitOfWork.UserManager.FindByIdAsync(id);
+            var user = await _unitOfWork.UserManager.FindByIdAsync(id);
+
+            return _mapper.Map<ApplicationUser, UserDto>(user);
+        }
+
+        /// <summary>
+        /// Returns an user by Name asynchronously
+        /// </summary>
+        /// <param name="name">User's Name</param>
+        /// <returns>UserDto entity</returns>
+        public async Task<UserDto> FindUserByName(string name)
+        {
+            var user = _unitOfWork.UserManager.FindByName(name);
 
             return _mapper.Map<ApplicationUser, UserDto>(user);
         }

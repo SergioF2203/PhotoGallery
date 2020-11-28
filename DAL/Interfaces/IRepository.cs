@@ -9,7 +9,7 @@ namespace DAL.Interfaces
 {
     public interface IRepository<TEntity> where TEntity:BaseEntity
     {
-        Task<IQueryable<TEntity>> FindAll();
+        IQueryable<TEntity> FindAll();
         Task<TEntity> FindByIdAsync(string id);
         Task AddAsync(TEntity entity);
         void Add(TEntity entity);

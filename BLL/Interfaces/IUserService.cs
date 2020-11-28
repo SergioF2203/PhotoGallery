@@ -14,6 +14,7 @@ namespace BLL.Interfaces
         Task<OperationDetails> Create(UserDto userDto);
         Task<ClaimsIdentity> Authenticate(UserDto userDto);
         IEnumerable<UserDto> GetUsers();
+        Task<UserDto> FindUserByName(string name);
         Task SetInitialData(UserDto adminDto, IEnumerable<string> roles);
         Task ChangeLockUserState(string email);
         Task RemoveUserAsync(string email);

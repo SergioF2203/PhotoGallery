@@ -421,7 +421,7 @@ namespace PL.Controllers
             {
                 Email = "admin@email.com",
                 UserName = "admin@email.com",
-                Password = "qqqqqq",
+                Password = "qwdqwd",
                 Name = "admin",
                 Roles = new List<string>() { "admin" }
 

@@ -42,11 +42,21 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
-        public async Task<IEnumerable<string>> GelAllPhotosPaths()
+        public IEnumerable<string> GelAllPhotosPaths(string id)
         {
-            var photos = await  _unitOfwork.PhotoRepository.FindAll();
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.ApplicationUserId == id);
 
-            return _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos).Select(p=>p.PhotoPath);
+            var photoFullPath =  _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos).Select(p=>p.PhotoPath);
+
+            var shortPath = new List<string>();
+            foreach(var item in photoFullPath)
+            {
+                var index = item.IndexOf("Upload");
+                var temp = item.Substring(index + 7);
+                shortPath.Add(temp);
+            }
+
+            return shortPath;
         }
 
         public IEnumerable<string> GetPathsPublishPhoto()

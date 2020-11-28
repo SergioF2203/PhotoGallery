@@ -29,9 +29,9 @@ namespace DAL.Repositories
         }
 
 
-        public async Task<IQueryable<Photo>> FindAll()
+        public IQueryable<Photo> FindAll()
         {
-            return await Task.Run(()=> _context.Photos);
+            return  _context.Photos;
         }
 
         public async Task<Photo> FindByIdAsync(string id)
