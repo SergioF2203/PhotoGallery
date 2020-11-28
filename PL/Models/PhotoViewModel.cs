@@ -6,16 +6,16 @@ using System.Web;
 
 namespace PL.Models
 {
-    public class AddPhotoViewModel
-    {
-        [Required]
-        public string Id { get; set; }
+    //public class PhotoAddViewModel
+    //{
+    //    [Required]
+    //    public string Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
-        public string Title { get; set; }
-        public DateTime CreateDate { get; set; }
-    }
+    //    [Required]
+    //    public string Name { get; set; }
+    //    public string Title { get; set; }
+    //    public DateTime CreateDate { get; set; }
+    //}
 
     public class GetPhotoViewModel
     {

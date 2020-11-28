@@ -18,15 +18,20 @@ namespace DAL.Repositories
             _context = context;
         }
         
-        public void AddAsync(Photo entity)
+        public void Add(Photo entity)
         {
             _context.Photos.Add(entity);
         }
 
-
-        public IQueryable<Photo> FindAll()
+        public async Task AddAsync(Photo entity)
         {
-            return _context.Photos;
+            await Task.Run(() => _context.Photos.Add(entity));
+        }
+
+
+        public async Task<IQueryable<Photo>> FindAll()
+        {
+            return await Task.Run(()=> _context.Photos);
         }
 
         public async Task<Photo> FindByIdAsync(string id)

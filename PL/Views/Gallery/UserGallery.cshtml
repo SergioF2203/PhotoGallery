@@ -1,4 +1,4 @@
-﻿@model PL.Models.AddPhotoViewModel
+﻿@*@model PL.Models.PhotoAddViewModel*@
 
 @{
 	ViewBag.Title = "UserGallery";
@@ -51,12 +51,13 @@
 	</div>
 	<div class="row tm-mb-90 tm-gallery">
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-			<figure class="effect-ming tm-video-item">
+			<figure class=" tm-video-item">
 				<img src="~/img/img-03.jpg" alt="Image" class="img-fluid">
-				<figcaption class="d-flex align-items-center justify-content-center">
+				@*<figcaption class="d-flex align-items-center justify-content-center">
 					<h2>Clocks</h2>
-					<a href="photo-detail.html">View more</a>
-				</figcaption>
+			<i class="material-icons">info</i>
+			<a href="photo-detail.html">View more</a>
+		</figcaption>*@
 			</figure>
 			<div class="d-flex justify-content-between tm-text-gray">
 				<span class="tm-text-gray-light">18 Oct 2020</span>
@@ -66,10 +67,10 @@
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
 			<figure class="effect-ming tm-video-item">
 				<img src="~/img/img-04.jpg" alt="Image" class="img-fluid">
-				<figcaption class="d-flex align-items-center justify-content-center">
+				@*<figcaption class="d-flex align-items-center justify-content-center">
 					<h2>Plants</h2>
 					<a href="photo-detail.html">View more</a>
-				</figcaption>
+				</figcaption>*@
 			</figure>
 			<div class="d-flex justify-content-between tm-text-gray">
 				<span class="tm-text-gray-light">14 Oct 2020</span>
@@ -260,7 +261,7 @@
 			</div>
 		</div>
 	</div> <!-- row -->
-	<div class="row tm-mb-90">
+	@*<div class="row tm-mb-90">
 		<div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
 			<a href="javascript:void(0);" class="btn btn-primary tm-btn-prev mb-2 disabled">Previous</a>
 			<div class="tm-paging d-flex">
@@ -271,7 +272,7 @@
 			</div>
 			<a href="javascript:void(0);" class="btn btn-primary tm-btn-next">Next Page</a>
 		</div>
-	</div>
+	</div>*@
 </div> <!-- container-fluid, tm-container-content -->
 
 

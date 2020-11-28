@@ -25,8 +25,14 @@ namespace BLL.Services
         }
         public async Task AddAsync(PhotoDto model)
         {
-            _unitOfwork.PhotoRepository.AddAsync(_mapper.Map<PhotoDto, Photo>(model));
+            await _unitOfwork.PhotoRepository.AddAsync(_mapper.Map<PhotoDto, Photo>(model));
             await _unitOfwork.SaveASync();
+        }
+
+        public void Add(PhotoDto model)
+        {
+            _unitOfwork.PhotoRepository.Add(_mapper.Map<PhotoDto, Photo>(model));
+            _unitOfwork.SaveASync();
         }
 
         public async Task<PhotoDto> GetPhotoByIdAsync(string id)
@@ -36,9 +42,9 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
-        public IEnumerable<string> GelAllPhotosPaths()
+        public async Task<IEnumerable<string>> GelAllPhotosPaths()
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().ToList();
+            var photos = await  _unitOfwork.PhotoRepository.FindAll();
 
             return _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos).Select(p=>p.PhotoPath);
         }

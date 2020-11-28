@@ -22,9 +22,9 @@ namespace PL.Controllers
         {
             _photoService = photoService;
 
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<AddPhotoViewModel, PhotoDto>()
-            .ForMember(dest => dest.PhotoName, opt => opt.MapFrom(src => src.Name))
-            .ReverseMap()));
+            //_mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PhotoAddViewModel, PhotoDto>()
+            //.ForMember(dest => dest.PhotoName, opt => opt.MapFrom(src => src.Name))
+            //.ReverseMap()));
 
 
         }
@@ -44,11 +44,11 @@ namespace PL.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult AddPhoto()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult AddPhoto()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public ActionResult AddPhoto(HttpPostedFileBase file)
@@ -108,10 +108,13 @@ namespace PL.Controllers
             }
 
             var pic = new PhotoDto() { Id = Guid.NewGuid().ToString(), PhotoName = fileName, DateTimeUploading = DateTime.Now, PhotoPath = path, IsPublish = false };
-            _photoService.AddAsync(pic);
+
+             _photoService.AddAsync(pic);
+
+            var photoArray =  _photoService.GelAllPhotosPaths();
 
             ViewBag.StatusMessage = "File successfully uploaded!";
-            return View();
+            return RedirectToAction("UserGallery", "Gallery");
         }
 
         public ActionResult GetPhoto()
