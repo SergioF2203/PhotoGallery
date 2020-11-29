@@ -42,21 +42,25 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
-        public IEnumerable<string> GelAllPhotosPaths(string id)
+        public IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id)
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.ApplicationUserId == id);
 
-            var photoFullPath =  _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos).Select(p=>p.PhotoPath);
+            var photoFullPath =  _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos);
 
-            var shortPath = new List<string>();
+            var editPhotosList = new List<EditPhotoDto>();
+
             foreach(var item in photoFullPath)
             {
-                var index = item.IndexOf("Upload");
-                var temp = item.Substring(index + 7);
-                shortPath.Add(temp);
+                var index = item.PhotoPath.IndexOf("Upload");
+                var cutedPath = item.PhotoPath.Substring(index + 7);
+
+                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath };
+
+                editPhotosList.Add(tempItem);
             }
 
-            return shortPath;
+            return editPhotosList;
         }
 
         public IEnumerable<string> GetPathsPublishPhoto()
@@ -64,6 +68,16 @@ namespace BLL.Services
             var photos = _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(_unitOfwork.PhotoRepository.GetPublishPhotos());
 
             return photos.Select(p => p.PhotoPath);
+        }
+
+        /// <summary>
+        /// Remove Photo entity
+        /// </summary>
+        /// <param name="model">Photo entity</param>
+        public void Remove(PhotoDto model)
+        {
+            _unitOfwork.PhotoRepository.RemoveAsync(_mapper.Map<PhotoDto, Photo>(model));
+            _unitOfwork.SaveASync();
         }
 
 

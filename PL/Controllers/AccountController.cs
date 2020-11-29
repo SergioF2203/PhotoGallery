@@ -157,7 +157,7 @@ namespace PL.Controllers
 
                     if (res.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("UserGallery", "Gallery");
                     }
 
                     ModelState.AddModelError(res.Property, res.Message);

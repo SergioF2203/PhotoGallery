@@ -53,7 +53,7 @@ namespace DAL.Repositories
         {
             var photo = await FindByIdAsync((entity.Id).ToString());
 
-            await Task.Run(()=>_context.Photos.Remove(photo));
+            _context.Photos.Remove(photo);
         }
 
         public IEnumerable<Photo> GetPhotosById(string id)

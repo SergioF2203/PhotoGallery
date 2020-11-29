@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\ISingInService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\ChangePasswordDto.cs" />
+    <Compile Include="Models\EditPhotoDto.cs" />
     <Compile Include="Models\PhotoDto.cs" />
     <Compile Include="Models\RoleDto.cs" />
     <Compile Include="Models\UserDto.cs" />

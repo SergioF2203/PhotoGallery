@@ -13,10 +13,12 @@ namespace BLL.Interfaces
     {
         Task AddAsync(PhotoDto model);
         void Add(PhotoDto model);
+        void Remove(PhotoDto model);
 
         Task<PhotoDto> GetPhotoByIdAsync(string id);
         IEnumerable<string> GetPathsPublishPhoto();
-        IEnumerable<string> GelAllPhotosPaths(string id);
+        IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id);
+
 
 
 

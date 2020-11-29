@@ -29,6 +29,8 @@ namespace PL.Controllers
             //.ForMember(dest => dest.PhotoName, opt => opt.MapFrom(src => src.Name))
             //.ReverseMap()));
 
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<EditPhotoDto, PhotoEditModel>().ReverseMap()));
+
 
         }
         // GET: Gallery
@@ -37,6 +39,10 @@ namespace PL.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Get all User's phoot
+        /// </summary>
+        /// <returns>All user's photo in gallery</returns>
         public ActionResult UserGallery()
         {
             var user = _userService.FindUserByName(User.Identity.Name).Result;
@@ -130,12 +136,28 @@ namespace PL.Controllers
 
             ViewBag.StatusMessage = "File successfully uploaded!";
 
-            return RedirectToAction("GetAllPath", "Gallery", new { userId = pic.ApplicationUserId});
+            return RedirectToAction("GetAllPath", "Gallery", new { userId = pic.ApplicationUserId });
+        }
+
+        public async Task<ActionResult> RemovePhoto(string photoId)
+        {
+            var photo = await _photoService.GetPhotoByIdAsync(photoId);
+
+            if (System.IO.File.Exists(photo.PhotoPath))
+            {
+                System.IO.File.Delete(photo.PhotoPath);
+            }
+
+            _photoService.Remove(photo);
+
+            return RedirectToAction("UserGallery");
         }
 
         public ActionResult GetAllPath(string userId)
         {
             var temp = _photoService.GelAllPhotosPaths(userId);
+
+            var mappedEntites = _mapper.Map<IEnumerable<EditPhotoDto>, IEnumerable<PhotoEditModel>>(temp);
 
             return View("UserGallery", temp);
         }
