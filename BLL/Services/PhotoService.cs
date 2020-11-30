@@ -55,7 +55,7 @@ namespace BLL.Services
                 var index = item.PhotoPath.IndexOf("Upload");
                 var cutedPath = item.PhotoPath.Substring(index + 7);
 
-                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath };
+                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading };
 
                 editPhotosList.Add(tempItem);
             }

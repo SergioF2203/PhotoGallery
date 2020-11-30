@@ -51,18 +51,24 @@
 						<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
 					</figure>
 					<div class="d-flex justify-content-between tm-text-gray">
-						<span class="tm-text-gray-light">18 Oct 2020</span>
+						<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
 						<span>9,906 views</span>
+						<div class="row" style="margin-top:-.5rem">
 
-						<button type="button" rel="tooltip" title="Remove" class="btn btn-outline-warning" style="margin-top: -4rem; margin-bottom:3rem; margin-right:.5rem; z-index:100" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Id">
-							<i class="material-icons">delete_outline</i>
-						</button>
+							<button type="button" rel="tooltip" title="Visibility" class="btn btn-outline-warning" style="margin-right:.1rem" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Id">
+								<i class="material-icons">visibility_off</i>
+							</button>
+
+							<button type="button" rel="tooltip" title="Remove" class="btn btn-outline-warning" style="margin-right:1.5rem" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Id">
+								<i class="material-icons">delete_outline</i>
+							</button>
+						</div>
 
 						<div class="modal fade" id="Remove_staticBackdrop_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="staticBackdropLabel">Remove Account</h5>
+										<h5 class="modal-title" id="staticBackdropLabel">Remove Photo</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>

@@ -63,14 +63,44 @@
 		{
 		<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
 			<div class="d-flex justify-content-between tm-text-gray" style="z-index:100">
-				<span class="tm-text-gray-light">15 photos</span>
-				@using (Html.BeginForm("RemoveAlbum", "Gallery", FormMethod.Post, new { albumId = item.Id, style = "z-index:100" }))
-				{
-					<input type="hidden" value="@item.Id" name="albumId" />
-					<button type="submit" class="btn btn-outline-warning" style="margin-top: -5rem; margin-bottom:-3rem; margin-right:.5rem">
-						<i class="material-icons">delete_outline</i>
-					</button>
-				}
+				<span class="tm-text-gray-light" style="margin-top: 1rem">15 photos</span>
+				@*@using (Html.BeginForm("RemoveAlbum", "Gallery", FormMethod.Post, new { albumId = item.Id, style = "z-index:100" }))
+		{
+			<input type="hidden" value="@item.Id" name="albumId" />
+			<button type="submit" class="btn btn-outline-warning" style="margin-top: -5rem; margin-bottom:-3rem; margin-right:.5rem">
+				<i class="material-icons">delete_outline</i>
+			</button>
+		}*@
+
+				<button type="button" rel="tooltip" title="Remove" class="btn btn-outline-warning" style="margin-bottom: .1rem; margin-right: .1rem" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Id">
+					<i class="material-icons">delete_outline</i>
+				</button>
+
+				<div class="modal fade" id="Remove_staticBackdrop_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="staticBackdropLabel">Remove Album</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								Are you sure you want to remove an album?
+							</div>
+							<div class="modal-footer">
+								@using (Html.BeginForm("RemoveAlbum", "Gallery", FormMethod.Post, new { albumId = item.Id }))
+								{
+									<input type="hidden" value="@item.Id" name="albumId" />
+									<input type="submit" value="Remove" name="submit" class="btn btn-warning" />
+								}
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 				@*<span>9,906 views</span>*@
 			</div>
 
