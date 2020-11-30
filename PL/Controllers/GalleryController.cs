@@ -19,16 +19,20 @@ namespace PL.Controllers
     {
         private readonly IPhotoService _photoService;
         private readonly IUserService _userService;
+        private readonly IAlbumService _albumService;
         private Mapper _mapper;
-        public GalleryController(IPhotoService photoService, IUserService userService)
+        public GalleryController(IPhotoService photoService, IUserService userService, IAlbumService albumService)
         {
             _photoService = photoService;
             _userService = userService;
+            _albumService = albumService;
 
             //_mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PhotoAddViewModel, PhotoDto>()
             //.ForMember(dest => dest.PhotoName, opt => opt.MapFrom(src => src.Name))
             //.ReverseMap()));
 
+
+            //mapping for transfer id and a path of image
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<EditPhotoDto, PhotoEditModel>().ReverseMap()));
 
 
@@ -59,17 +63,15 @@ namespace PL.Controllers
             return View(photoPaths);
         }
 
+        
+
         public ActionResult UserAlbum()
         {
+            var temp = _albumService.GetAlbums().ToList();
 
-            return View();
+            return View(temp);
         }
 
-        //[HttpGet]
-        //public ActionResult AddPhoto()
-        //{
-        //    return View();
-        //}
 
         [HttpPost]
         public ActionResult AddPhoto(HttpPostedFileBase file)
@@ -139,6 +141,16 @@ namespace PL.Controllers
             return RedirectToAction("GetAllPath", "Gallery", new { userId = pic.ApplicationUserId });
         }
 
+        [HttpPost]
+        public ActionResult AddAlbum (string albumTitle)
+        {
+            var album = new AlbumDto() {Id = Guid.NewGuid().ToString(), Title = albumTitle };
+
+            _albumService.Add(album);
+
+            return RedirectToAction("UserAlbum");
+        }
+
         public async Task<ActionResult> RemovePhoto(string photoId)
         {
             var photo = await _photoService.GetPhotoByIdAsync(photoId);
@@ -151,6 +163,15 @@ namespace PL.Controllers
             _photoService.Remove(photo);
 
             return RedirectToAction("UserGallery");
+        }
+
+        public async Task<ActionResult> RemoveAlbum(string albumId)
+        {
+            var album = await _albumService.GetAlbumByIdAsync(albumId);
+
+            _albumService.Remove(album);
+
+            return RedirectToAction("UserAlbum");
         }
 
         public ActionResult GetAllPath(string userId)

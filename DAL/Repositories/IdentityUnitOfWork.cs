@@ -20,6 +20,7 @@ namespace DAL.Repositories
         private readonly IClientManager clientManager;
 
         private readonly IPhotoRepository photoRepository;
+        private IAlbumRepository albumRepository;
 
         public IdentityUnitOfWork(string connectionString)
         {
@@ -30,6 +31,7 @@ namespace DAL.Repositories
         }
 
         public IPhotoRepository PhotoRepository => photoRepository ?? new PhotoRepository(db);
+        public IAlbumRepository AlbumRepository => albumRepository ?? new AlbumRepository(db);
 
         public ApplicationUserManager UserManager => userManager;
 

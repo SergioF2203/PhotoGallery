@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class Album
+    public class Album : BaseEntity
     {
-        [Required]
-        public Guid Id { get; set; }
         [Required]
         public string AlbumName { get; set; }
         public string ImagePath { get; set; }

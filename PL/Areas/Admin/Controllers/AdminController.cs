@@ -93,7 +93,9 @@ namespace PL.Areas.Admin.Controllers
 
         public ActionResult GetUsers()
         {
-            var users = UserService.GetUsers();
+            var users = UserService.GetUsers().ToList();
+
+            users.RemoveAll(u => u.Roles.Any(r => r == "admin"));
 
             ViewBag.Item = "Users";
 

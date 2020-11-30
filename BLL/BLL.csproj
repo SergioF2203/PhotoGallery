@@ -53,11 +53,13 @@
   <ItemGroup>
     <Compile Include="AutoMap.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
+    <Compile Include="Interfaces\IAlbumService.cs" />
     <Compile Include="Interfaces\IPhotoService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\IServiceCreator.cs" />
     <Compile Include="Interfaces\ISingInService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Models\AlbumDto.cs" />
     <Compile Include="Models\ChangePasswordDto.cs" />
     <Compile Include="Models\EditPhotoDto.cs" />
     <Compile Include="Models\PhotoDto.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Models\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceModule.cs" />
+    <Compile Include="Services\AlbumService.cs" />
     <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\ServiceCreator.cs" />

@@ -35,6 +35,7 @@ namespace PL.Util
             //});
 
             Bind<IPhotoService>().To<PhotoService>();
+            Bind<IAlbumService>().To<AlbumService>();
 
 
 

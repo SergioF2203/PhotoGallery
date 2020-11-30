@@ -157,6 +157,16 @@ namespace PL.Controllers
 
                     if (res.Succeeded)
                     {
+                        ClaimsIdentity claims = await UserService.Authenticate(user);
+
+                        AuthenticationManager.SignOut();
+
+                        AuthenticationManager.SignIn(new AuthenticationProperties
+                        {
+                            IsPersistent = true
+
+                        }, claims);
+
                         return RedirectToAction("UserGallery", "Gallery");
                     }
 

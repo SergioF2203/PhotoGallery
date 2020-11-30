@@ -49,6 +49,11 @@ namespace DAL.Repositories
             return _context.Photos.OrderByDescending(p => p.Raiting);
         }
 
+        public void Remove(Photo entity)
+        {
+            _context.Photos.Remove(entity);
+        }
+
         public async Task RemoveAsync(Photo entity)
         {
             var photo = await FindByIdAsync((entity.Id).ToString());
