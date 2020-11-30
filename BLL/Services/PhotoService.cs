@@ -21,7 +21,11 @@ namespace BLL.Services
         public PhotoService(IUnitOfWork unitOfWork)
         {
             _unitOfwork = unitOfWork;
-            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Photo, PhotoDto>().ReverseMap()));
+            _mapper = new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Photo, PhotoDto>().ReverseMap();
+                cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
+            }));
         }
         public async Task AddAsync(PhotoDto model)
         {
@@ -44,18 +48,19 @@ namespace BLL.Services
 
         public IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id)
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.ApplicationUserId == id);
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.ApplicationUserId == id);
 
-            var photoFullPath =  _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos);
+            var photoFullPath = _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos);
 
             var editPhotosList = new List<EditPhotoDto>();
 
-            foreach(var item in photoFullPath)
+            foreach (var item in photoFullPath)
             {
                 var index = item.PhotoPath.IndexOf("Upload");
                 var cutedPath = item.PhotoPath.Substring(index + 7);
 
-                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading };
+
+                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish };
 
                 editPhotosList.Add(tempItem);
             }
@@ -80,6 +85,20 @@ namespace BLL.Services
             _unitOfwork.SaveASync();
         }
 
+        public async Task<PhotoDto> ChangeVisibilityAsync(string Id)
+        {
+            var photo = await _unitOfwork.PhotoRepository.FindByIdAsync(Id);
+
+            var photoDto = _mapper.Map<Photo, PhotoDto>(photo);
+
+            photo.IsPublish = !photo.IsPublish;
+
+            await _unitOfwork.PhotoRepository.UpdateAsync(photo);
+            await _unitOfwork.SaveASync();
+
+            return photoDto;
+        }
+
 
 
         private bool disposed = false;
@@ -91,7 +110,7 @@ namespace BLL.Services
 
         protected virtual void Dispose(bool disposing)
         {
-            if(!disposed && disposing)
+            if (!disposed && disposing)
             {
                 _unitOfwork.Dispose();
             }

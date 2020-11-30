@@ -13,5 +13,6 @@ namespace BLL.Models
         public string PhotoPath { get; set; }
 
         public DateTime DateTimeUploading { get; set; } = default;
+        public bool IsPublish { get; set; }
     }
 }

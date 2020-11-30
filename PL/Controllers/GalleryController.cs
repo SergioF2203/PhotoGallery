@@ -178,7 +178,7 @@ namespace PL.Controllers
         {
             var temp = _photoService.GelAllPhotosPaths(userId);
 
-            var mappedEntites = _mapper.Map<IEnumerable<EditPhotoDto>, IEnumerable<PhotoEditModel>>(temp);
+            //var mappedEntites = _mapper.Map<IEnumerable<EditPhotoDto>, IEnumerable<PhotoEditModel>>(temp);
 
             return View("UserGallery", temp);
         }
@@ -194,6 +194,19 @@ namespace PL.Controllers
             var temp = await _photoService.GetPhotoByIdAsync(model.Id);
 
             return View();
+        }
+
+        /// <summary>
+        /// Change photo visibility
+        /// </summary>
+        /// <param name="photoId">Photo's Id</param>
+        public async Task<ActionResult> ChangeVisibility(string photoId)
+        {
+            var photo = await _photoService.GetPhotoByIdAsync(photoId);
+
+            await _photoService.ChangeVisibilityAsync(photoId);
+
+            return RedirectToAction("UserGallery");
         }
 
         public ActionResult LogOff()

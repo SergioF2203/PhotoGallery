@@ -66,9 +66,12 @@ namespace DAL.Repositories
             return _context.Photos.Where(p => p.Id == id).ToList();
         }
 
-        public Task UpdateAsync(Photo entity)
+        public async Task UpdateAsync(Photo entity)
         {
-            throw new NotImplementedException();
+            var photoEntity = await  _context.Photos.FindAsync(entity.Id);
+            _context.Photos.Attach(photoEntity);
+            _context.Entry(photoEntity).State = System.Data.Entity.EntityState.Modified;
+
         }
     }
 }
