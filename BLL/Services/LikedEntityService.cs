@@ -20,7 +20,6 @@ namespace BLL.Services
 
         public async Task AddLikedEntityAsync(string entityId, string userName)
         {
-            //var user =_unitOfWork.UserManager.FindByNameAsync(userName).Result;
             var tempEntity = new LikedEntity() { Id = entityId };
             tempEntity.Users.Add(await _unitOfWork.UserManager.FindByNameAsync(userName));
 

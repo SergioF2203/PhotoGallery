@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using BLL.Interfaces;
+using BLL.Models;
 
 namespace PL.Controllers
 {
@@ -19,18 +20,22 @@ namespace PL.Controllers
             _likedEntityService = likedEntityService;
         }
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
-            if(User.IsInRole("admin"))
+            if (User.IsInRole("admin"))
             {
                 return RedirectToAction("Index", "Admin", new { area = "Admin" });
             }
 
-            //var photos = _photoService.GetAllPhoto();
-
-            var photos = _photoService.GetAllPhotoForLiked(User.Identity.Name);
-
-            return View(photos);
+            if (User.Identity.IsAuthenticated)
+            {
+                return View(_photoService.GetAllPhotoForLiked(User.Identity.Name));
+            }
+            else
+            {
+                return View(_photoService.GetAllPhoto());
+            }
         }
 
         [HttpPost]
