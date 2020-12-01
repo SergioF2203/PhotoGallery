@@ -28,9 +28,7 @@ namespace PL.Controllers
             }
         }
 
-        public AccountController()
-        {
-        }
+        public AccountController() { }
 
         //
         // GET: /Account/Login
@@ -66,8 +64,6 @@ namespace PL.Controllers
                     {
                         AuthenticationManager.SignOut();
 
-
-
                         AuthenticationManager.SignIn(new AuthenticationProperties
                         {
                             IsPersistent = true
@@ -79,9 +75,8 @@ namespace PL.Controllers
                             if (item.Value == "admin")
                                 return RedirectToAction("Index", "Admin", new { area = "Admin" });
                         }
-
                     }
-                } 
+                }
             }
 
             return RedirectToAction("UserGallery", "Gallery");

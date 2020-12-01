@@ -27,11 +27,6 @@ namespace PL.Controllers
             _userService = userService;
             _albumService = albumService;
 
-            //_mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<PhotoAddViewModel, PhotoDto>()
-            //.ForMember(dest => dest.PhotoName, opt => opt.MapFrom(src => src.Name))
-            //.ReverseMap()));
-
-
             //mapping for transfer id and a path of image
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<EditPhotoDto, PhotoEditModel>().ReverseMap()));
 
@@ -56,9 +51,7 @@ namespace PL.Controllers
                 return RedirectToAction("LogOff");
             }
 
-
             var photoPaths = _photoService.GelAllPhotosPaths(user.Id);
-
 
             return View(photoPaths);
         }
@@ -177,8 +170,6 @@ namespace PL.Controllers
         public ActionResult GetAllPath(string userId)
         {
             var temp = _photoService.GelAllPhotosPaths(userId);
-
-            //var mappedEntites = _mapper.Map<IEnumerable<EditPhotoDto>, IEnumerable<PhotoEditModel>>(temp);
 
             return View("UserGallery", temp);
         }

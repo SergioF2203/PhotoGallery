@@ -26,6 +26,6 @@ namespace DAL.Entities
     public class Raiting
     {
         public int VoicesCount { get; set; } = 0;
-        public float CurrentRaiting { get; set; } = 0;
+        //public float CurrentRaiting { get; set; } = 0;
     }
 }

@@ -84,6 +84,7 @@
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\ClientProfile.cs" />
+    <Compile Include="Entities\LikedEntity.cs" />
     <Compile Include="Entities\Photo.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
@@ -144,6 +145,10 @@
     <Compile Include="Migrations\202011291815234_v12.designer.cs">
       <DependentUpon>202011291815234_v12.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011301841110_v14.cs" />
+    <Compile Include="Migrations\202011301841110_v14.designer.cs">
+      <DependentUpon>202011301841110_v14.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AlbumRepository.cs" />
@@ -194,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011291815234_v12.resx">
       <DependentUpon>202011291815234_v12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011301841110_v14.resx">
+      <DependentUpon>202011301841110_v14.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

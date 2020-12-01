@@ -1,48 +1,111 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Microsoft.AspNet.Identity
+
+@{
+	ViewBag.Title = "Home Page";
 }
 
-@*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>*@
-
-
-	<div>
-		<span>Index</span>
-		@*<ul class="nav navbar-nav navbar-right">
-			<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-			<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-		</ul>*@
-
-		@*<span>@Model.UserName</span>
-		@foreach (var item in Model.Photos)
+<nav class="navbar navbar-expand-lg">
+	<div class="container-fluid">
+		@if (Request.IsAuthenticated)
 		{
-			<span>@item.PhotoTitle</span>
-			<div style="background-image:url(@item.PhotoPath); width: 300px; height: 300px;background-size: 100%, 100%; background-position: center; background-repeat:no-repeat"></div>
-		}*@
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+				{
+					@Html.AntiForgeryToken()
+
+					<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+
+						<li class="nav-item">
+							@Html.ActionLink(User.Identity.Name.ToString(), "UserGallery", "Gallery", null, new { @class = "nav-link nav-link-2" })
+						</li>
+						<li class="nav-item">
+							<a class="nav-link nav-link-2" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+						</li>
+					</ul>
+
+				}
+			</div>
+		}
+		else
+		{
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						@Html.ActionLink("Register", "Register", "Account", null, new { @class = "nav-link nav-link-2" })
+					</li>
+					<li class="nav-item">
+						@Html.ActionLink("Sing In", "Login", "Account", null, new { @class = "nav-link nav-link-2" })
+					</li>
+				</ul>
+			</div>
+		}
+	</div>
+</nav>
+
+
+<div class="container-fluid tm-container-content tm-mt-60">
+	<div class="row tm-mb-90 tm-gallery">
+		@if (Model != null)
+		{
+			foreach (var item in Model)
+			{
+				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+					<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
+					<div class="d-flex justify-content-between tm-text-gray">
+						<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
+						<span>9,906 likes</span>
+						<div class="row" style="margin-top:-.5rem">
+							@*@using (Html.BeginForm("ChangeVisibility", "Gallery", new { photoId = item.Id }))
+								{
+									<input type="hidden" value="@item.Id" name="photoId" />
+									<button type="submit" rel="tooltip" title="Visibility" class="btn btn-outline-warning" style="margin-right:.1rem; border: none">
+
+										@if (item.IsPublish)
+										{
+											<i class="material-icons">visibility</i>
+										}
+										else
+										{
+											<i class="material-icons">visibility_off</i>
+										}
+									</button>
+								}
+
+								<button type="button" rel="tooltip" title="Remove" class="btn btn-outline-warning" style="margin-right:1.5rem; border: none" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Id">
+									<i class="material-icons">delete_outline</i>
+								</button>*@
+						</div>
+
+						@*<div class="modal fade" id="Remove_staticBackdrop_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="staticBackdropLabel">Remove Photo</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											Are you sure you want to remove a photo?
+										</div>
+										<div class="modal-footer">
+											@using (Html.BeginForm("RemovePhoto", "Gallery", FormMethod.Post, new { photoId = item.Id }))
+											{
+												<input type="hidden" value="@item.Id" name="photoId" />
+												<input type="submit" value="Remove" name="submit" class="btn btn-warning" />
+											}
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>*@
+
+
+					</div>
+				</div>
+			}
+		}
 
 	</div>
+</div>

@@ -25,6 +25,7 @@ namespace DAL.Context
 
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Album> Albums { get; set; }
+        public DbSet<LikedEntity> LikedEntities { get; set; }
 
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)

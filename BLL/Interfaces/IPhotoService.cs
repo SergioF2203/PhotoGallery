@@ -15,9 +15,10 @@ namespace BLL.Interfaces
         void Add(PhotoDto model);
         void Remove(PhotoDto model);
         Task<PhotoDto> ChangeVisibilityAsync(string id);
-
         Task<PhotoDto> GetPhotoByIdAsync(string id);
         IEnumerable<string> GetPathsPublishPhoto();
+        IEnumerable<ViewPhotoDto> GetAllPhoto();
+        IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string id);
         IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id);
 
 

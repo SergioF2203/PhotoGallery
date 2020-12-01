@@ -21,6 +21,7 @@ namespace DAL.Entities
 
         public virtual ClientProfile ClientProfile { get; set; }
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
+        public ICollection<LikedEntity> LikedPhoto { get; set; } = new List<LikedEntity>();
 
     }
 }

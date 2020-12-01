@@ -25,6 +25,8 @@ namespace BLL.Services
             {
                 cfg.CreateMap<Photo, PhotoDto>().ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
+                cfg.CreateMap<Photo, ViewPhotoDto>();
+
             }));
         }
         public async Task AddAsync(PhotoDto model)
@@ -46,6 +48,31 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
+        public IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ViewPhotoDto> GetAllPhoto()
+        {
+            var photos = _unitOfwork.PhotoRepository.FindAll().OrderByDescending(p => p.DateTimeUploading).ToList();
+
+            var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoDto>>(photos);
+
+            var customPhotoList = new List<ViewPhotoDto>();
+
+            foreach(var item in photosDto)
+            {
+                var index = item.PhotoPath.IndexOf("Upload");
+                var cutedPath = item.PhotoPath.Substring(index + 7);
+
+                customPhotoList.Add(new ViewPhotoDto { Id=item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath});
+            }
+
+            return customPhotoList;
+        }
+
+
         public IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id)
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.ApplicationUserId == id);
@@ -58,7 +85,6 @@ namespace BLL.Services
             {
                 var index = item.PhotoPath.IndexOf("Upload");
                 var cutedPath = item.PhotoPath.Substring(index + 7);
-
 
                 var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish };
 
