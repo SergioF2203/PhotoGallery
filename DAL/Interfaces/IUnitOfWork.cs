@@ -15,6 +15,7 @@ namespace DAL.Interfaces
 
         IPhotoRepository PhotoRepository { get; }
         IAlbumRepository AlbumRepository { get; }
+        ILikedEntityRepository LikedEntityRepository { get; }
         Task SaveASync();
     }
 }

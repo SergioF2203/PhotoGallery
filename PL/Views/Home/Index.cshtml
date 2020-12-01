@@ -56,6 +56,15 @@
 						<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
 						<span>9,906 likes</span>
 						<div class="row" style="margin-top:-.5rem">
+							@using (Html.BeginForm("ChangeLike", "Home", new { photoId = item.Id, user = User.Identity.Name }))
+							{
+								<input type="hidden" value="@item.Id" name="photoId" />
+								<input type="hidden" value="@User.Identity.Name" name="user" />
+
+								<button type="submit" rel="tooltip" title="Like" class="btn btn-outline-danger" style="margin-right:.1rem; border: none">
+									<i class="material-icons">favorite_border</i>
+								</button>
+							}
 							@*@using (Html.BeginForm("ChangeVisibility", "Gallery", new { photoId = item.Id }))
 								{
 									<input type="hidden" value="@item.Id" name="photoId" />

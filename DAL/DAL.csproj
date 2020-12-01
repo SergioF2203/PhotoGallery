@@ -90,6 +90,7 @@
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Interfaces\IAlbumRepository.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
+    <Compile Include="Interfaces\ILikedEntityRepository.cs" />
     <Compile Include="Interfaces\IPhotoRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Repositories\AlbumRepository.cs" />
     <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
+    <Compile Include="Repositories\LikedEntityRepository.cs" />
     <Compile Include="Repositories\PhotoRepository.cs" />
   </ItemGroup>
   <ItemGroup>

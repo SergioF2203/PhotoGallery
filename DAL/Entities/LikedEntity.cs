@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    public class LikedEntity
+    public class LikedEntity : BaseEntity
     {
-        public string Id { get; set; }
         public ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
     }
 }
