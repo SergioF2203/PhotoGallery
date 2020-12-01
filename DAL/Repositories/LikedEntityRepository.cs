@@ -32,14 +32,14 @@ namespace DAL.Repositories
             return _context.LikedEntities.Include("Users");
         }
 
-        public Task<LikedEntity> FindByIdAsync(string id)
+        public async Task<LikedEntity> FindByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            return await Task.Run(()=> _context.LikedEntities.Include("Users").FirstOrDefault(e=>e.Id==id));
         }
 
         public void Remove(LikedEntity entity)
         {
-            throw new NotImplementedException();
+            _context.LikedEntities.Remove(entity);
         }
 
         public Task RemoveAsync(LikedEntity entity)

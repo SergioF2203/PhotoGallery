@@ -25,8 +25,8 @@ namespace BLL.Services
             {
                 cfg.CreateMap<Photo, PhotoDto>().ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
-                cfg.CreateMap<Photo, ViewPhotoDto>();
-                cfg.CreateMap<Photo, ViewPhotoLikeDto>();
+                cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(src=>src.Raiting.VoicesCount));
+                cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(src=>src.Raiting.VoicesCount));
             }));
         }
         public async Task AddAsync(PhotoDto model)
@@ -76,7 +76,7 @@ namespace BLL.Services
                 var index = item.PhotoPath.IndexOf("Upload");
                 var cutedPath = item.PhotoPath.Substring(index + 7);
 
-                customPhotoList.Add(new ViewPhotoLikeDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath, IsLiked = item.IsLiked});
+                customPhotoList.Add(new ViewPhotoLikeDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath, IsLiked = item.IsLiked, VoiceCount = item.VoiceCount});
             }
 
             return customPhotoList;
@@ -95,7 +95,7 @@ namespace BLL.Services
                 var index = item.PhotoPath.IndexOf("Upload");
                 var cutedPath = item.PhotoPath.Substring(index + 7);
 
-                customPhotoList.Add(new ViewPhotoDto { Id=item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath});
+                customPhotoList.Add(new ViewPhotoDto { Id=item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath, VoiceCount = item.VoiceCount});
             }
 
             return customPhotoList;

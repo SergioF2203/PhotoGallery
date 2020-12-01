@@ -8,6 +8,6 @@ namespace BLL.Interfaces
 {
     public interface ILikedEntityService : IDisposable
     {
-        Task AddLikedEntityAsync(string entityId, string userName);
+        Task TogleLikedStateAsync(string entityId, string userName);
     }
 }
