@@ -26,7 +26,7 @@ namespace BLL.Services
                 cfg.CreateMap<Photo, PhotoDto>().ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
                 cfg.CreateMap<Photo, ViewPhotoDto>();
-
+                cfg.CreateMap<Photo, ViewPhotoLikeDto>();
             }));
         }
         public async Task AddAsync(PhotoDto model)
@@ -48,31 +48,43 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
-        public IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string id)
+        public IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string userName)
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().OrderByDescending(p => p.DateTimeUploading).ToList();
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoLikeDto>>(photos);
-            var likedPhoto = _unitOfwork.LikedEntityRepository.FindAll().ToList().GroupBy(p=>p.Users);
+            var likedPhotos = _unitOfwork.LikedEntityRepository.FindAll().ToList();
 
-            //foreach(var item in photosDto)
-            //{
-            //    if (likedPhoto.Any(p => p.Id == item.Id){
+            var usersLikedPhoto = _unitOfwork.UserManager.FindByNameAsync(userName).Result.LikedPhoto.ToList();
 
-            //    }
-            //}
 
-            throw new NotImplementedException();
+            var listWithLikedPhoto = new List<ViewPhotoLikeDto>();
 
+            foreach(var item in photosDto)
+            {
+                if (usersLikedPhoto.Any(p=>p.Id == item.Id))
+                {
+                    item.IsLiked = true;
+                }
+            }
+
+            var customPhotoList = new List<ViewPhotoLikeDto>();
+
+
+            foreach (var item in photosDto)
+            {
+                var index = item.PhotoPath.IndexOf("Upload");
+                var cutedPath = item.PhotoPath.Substring(index + 7);
+
+                customPhotoList.Add(new ViewPhotoLikeDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath, IsLiked = item.IsLiked});
+            }
+
+            return customPhotoList;
         }
 
         public IEnumerable<ViewPhotoDto> GetAllPhoto()
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().OrderByDescending(p => p.DateTimeUploading).ToList();
-
-            //experemental code
-            var likedPhoto = _unitOfwork.LikedEntityRepository.FindAll().ToList().GroupBy(p => p.Users);
-            //
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoDto>>(photos);
 

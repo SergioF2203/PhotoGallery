@@ -26,7 +26,9 @@ namespace PL.Controllers
                 return RedirectToAction("Index", "Admin", new { area = "Admin" });
             }
 
-            var photos = _photoService.GetAllPhoto();
+            //var photos = _photoService.GetAllPhoto();
+
+            var photos = _photoService.GetAllPhotoForLiked(User.Identity.Name);
 
             return View(photos);
         }

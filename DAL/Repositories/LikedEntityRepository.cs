@@ -29,7 +29,7 @@ namespace DAL.Repositories
 
         public IQueryable<LikedEntity> FindAll()
         {
-            return _context.LikedEntities;
+            return _context.LikedEntities.Include("Users");
         }
 
         public Task<LikedEntity> FindByIdAsync(string id)
