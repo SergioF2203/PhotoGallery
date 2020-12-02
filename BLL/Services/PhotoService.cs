@@ -23,10 +23,10 @@ namespace BLL.Services
             _unitOfwork = unitOfWork;
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Photo, PhotoDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(scr=>scr.Raiting.VoicesCount)).ReverseMap();
+                cfg.CreateMap<Photo, PhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(scr => scr.Raiting.VoicesCount)).ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
-                cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(src=>src.Raiting.VoicesCount));
-                cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(src=>src.Raiting.VoicesCount));
+                cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount));
+                cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount));
             }));
         }
         public async Task AddAsync(PhotoDto model)
@@ -48,23 +48,27 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
-        public IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string userName)
+        public async Task<IEnumerable<ViewPhotoLikeDto>> GetAllPhotoForLiked(string userName)
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoLikeDto>>(photos);
-            var likedPhotos = _unitOfwork.LikedEntityRepository.FindAll().ToList();
 
-            var usersLikedPhoto = _unitOfwork.UserManager.FindByNameAsync(userName).Result.LikedPhoto.ToList();
+            _unitOfwork.LikedEntityRepository.FindAll().ToList();
 
+            //var usersLikedPhoto = _unitOfwork.UserManager.FindByNameAsync(userName).Result.LikedPhoto.ToList();
 
-            var listWithLikedPhoto = new List<ViewPhotoLikeDto>();
+            var user = await _unitOfwork.UserManager.FindByNameAsync(userName);
+            var usersLikedPhoto = user.LikedPhoto.ToList();
 
-            foreach(var item in photosDto)
+            if (usersLikedPhoto.Count != 0)
             {
-                if (usersLikedPhoto.Any(p=>p.Id == item.Id))
+                foreach (var item in photosDto)
                 {
-                    item.IsLiked = true;
+                    if (usersLikedPhoto.Any(p => p.Id == item.Id))
+                    {
+                        item.IsLiked = true;
+                    }
                 }
             }
 
@@ -73,10 +77,10 @@ namespace BLL.Services
 
             foreach (var item in photosDto)
             {
-                var index = item.PhotoPath.IndexOf("Upload");
-                var cutedPath = item.PhotoPath.Substring(index + 7);
+                var index = item.ThumbnailPath.IndexOf("Upload");
+                var cutedPath = item.ThumbnailPath.Substring(index);
 
-                customPhotoList.Add(new ViewPhotoLikeDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath, IsLiked = item.IsLiked, VoiceCount = item.VoiceCount});
+                customPhotoList.Add(new ViewPhotoLikeDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, ThumbnailPath = cutedPath, IsLiked = item.IsLiked, VoiceCount = item.VoiceCount });
             }
 
             return customPhotoList;
@@ -84,18 +88,18 @@ namespace BLL.Services
 
         public IEnumerable<ViewPhotoDto> GetAllPhoto()
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoDto>>(photos);
 
             var customPhotoList = new List<ViewPhotoDto>();
 
-            foreach(var item in photosDto)
+            foreach (var item in photosDto)
             {
-                var index = item.PhotoPath.IndexOf("Upload");
-                var cutedPath = item.PhotoPath.Substring(index + 7);
+                var index = item.ThumbnailPath.IndexOf("Upload");
+                var cutedPath = item.ThumbnailPath.Substring(index);
 
-                customPhotoList.Add(new ViewPhotoDto { Id=item.Id, DateTimeUploading = item.DateTimeUploading, PhotoPath = cutedPath, VoiceCount = item.VoiceCount});
+                customPhotoList.Add(new ViewPhotoDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, ThumbnailPath = cutedPath, VoiceCount = item.VoiceCount });
             }
 
             return customPhotoList;
@@ -112,10 +116,10 @@ namespace BLL.Services
 
             foreach (var item in photoFullPath)
             {
-                var index = item.PhotoPath.IndexOf("Upload");
-                var cutedPath = item.PhotoPath.Substring(index + 7);
+                var index = item.ThumbnailPath.IndexOf("Upload");
+                var cutedPath = item.ThumbnailPath.Substring(index);
 
-                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish, VoiceCount = item.VoiceCount };
+                var tempItem = new EditPhotoDto() { Id = item.Id, ThumbnailPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish, VoiceCount = item.VoiceCount };
 
                 editPhotosList.Add(tempItem);
             }

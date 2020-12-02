@@ -14,6 +14,8 @@ namespace BLL.Models
         public DateTime DateTimeUploading { get; set; } = default;
         public bool IsLiked { get; set; }
         public int VoiceCount { get; set; }
+        public string ThumbnailPath { get; set; }
+
 
     }
 }

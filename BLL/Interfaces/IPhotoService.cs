@@ -18,7 +18,7 @@ namespace BLL.Interfaces
         Task<PhotoDto> GetPhotoByIdAsync(string id);
         IEnumerable<string> GetPathsPublishPhoto();
         IEnumerable<ViewPhotoDto> GetAllPhoto();
-        IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string id);
+        Task<IEnumerable<ViewPhotoLikeDto>> GetAllPhotoForLiked(string userName);
         IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id);
 
 

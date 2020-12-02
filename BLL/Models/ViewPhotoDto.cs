@@ -12,6 +12,8 @@ namespace BLL.Models
         public string PhotoPath { get; set; }
         public DateTime DateTimeUploading { get; set; } = default;
         public int VoiceCount { get; set; }
+        public string ThumbnailPath { get; set; }
+
 
     }
 }

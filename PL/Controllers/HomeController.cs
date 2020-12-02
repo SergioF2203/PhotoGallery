@@ -21,7 +21,7 @@ namespace PL.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             if (User.IsInRole("admin"))
             {
@@ -30,7 +30,7 @@ namespace PL.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                return View(_photoService.GetAllPhotoForLiked(User.Identity.Name));
+                return View(await _photoService.GetAllPhotoForLiked(User.Identity.Name));
             }
             else
             {

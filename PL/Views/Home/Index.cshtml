@@ -81,7 +81,7 @@
 				foreach (var item in Model)
 				{
 					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-						<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
+						<img src="~/@item.ThumbnailPath" alt="Image" class="img-fluid">
 						<div class="d-flex justify-content-between tm-text-gray">
 							<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
 							<span>
@@ -95,13 +95,13 @@
 
 									if (item.IsLiked)
 									{
-										<button type="submit" rel="tooltip" title="Like" class="btn btn-outline-danger" style="margin-right:.1rem; border: none">
+										<button type="submit" rel="tooltip" title="Like" class="btn btn-outline-danger" style="margin-right:.1rem; border: none; box-shadow:none">
 											<i class="material-icons">favorite</i>
 										</button>
 									}
 									else
 									{
-										<button type="submit" rel="tooltip" title="Like" class="btn btn-outline-danger" style="margin-right:.1rem; border: none">
+										<button type="submit" rel="tooltip" title="Like" class="btn btn-outline-danger" style="margin-right:.1rem; border: none; box-shadow:none">
 											<i class="material-icons">favorite_border</i>
 										</button>
 									}
@@ -123,7 +123,7 @@ else
 				foreach (var item in Model)
 				{
 					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
-						<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
+						<img src="~/@item.ThumbnailPath" alt="Image" class="img-fluid">
 						<div class="d-flex justify-content-between tm-text-gray">
 							<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
 							<span>@item.VoiceCount like(-s)</span>

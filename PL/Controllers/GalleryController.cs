@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -74,6 +75,7 @@ namespace PL.Controllers
             var fileName = string.Empty;
             var path = string.Empty;
             var thumbFileName = string.Empty;
+            var thumbFilePath = string.Empty;
 
             //check exist file from from
             if (file != null)
@@ -88,7 +90,8 @@ namespace PL.Controllers
                 }
 
                 var fileExtention = Path.GetExtension(file.FileName).ToLower();
-                var listOfExtensions = new List<string>() { ".jpg", ".jpeg", ".bmp", ".png" };
+                //var listOfExtensions = new List<string>() { ".jpg", ".jpeg", ".bmp", ".png" };
+                string[] listOfExtensions = ConfigurationManager.AppSettings["ValidImageExtensions"].Split(',');
                 var isAccept = false;
 
                 //check valid file extension
@@ -160,7 +163,7 @@ namespace PL.Controllers
 
                 //thumbnail path
                 var thumbPath = Path.Combine(Server.MapPath("~/Upload/" + User.Identity.GetUserId()), "thumbnail");
-                var thumbFilePath = Path.Combine(thumbPath, thumbFileName);
+                thumbFilePath = Path.Combine(thumbPath, thumbFileName);
 
 
                 //check exist directory
@@ -187,7 +190,7 @@ namespace PL.Controllers
                 PhotoName = fileName,
                 DateTimeUploading = DateTime.Now,
                 PhotoPath = path,
-                ThumbnailPath = thumbFileName,
+                ThumbnailPath = thumbFilePath,
                 IsPublish = false,
                 ApplicationUserId = userId
             };
@@ -217,6 +220,10 @@ namespace PL.Controllers
             if (System.IO.File.Exists(photo.PhotoPath))
             {
                 System.IO.File.Delete(photo.PhotoPath);
+            }
+            if (System.IO.File.Exists(photo.ThumbnailPath))
+            {
+                System.IO.File.Delete(photo.ThumbnailPath);
             }
 
             _photoService.Remove(photo);
