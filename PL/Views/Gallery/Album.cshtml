@@ -1,0 +1,91 @@
+﻿
+@{
+	ViewBag.Title = "Album";
+	Layout = "~/Views/Shared/_GalleryLayout.cshtml";
+}
+
+<h2>Album</h2>
+
+<div class="container-fluid tm-container-content tm-mt-60">
+	<div class="row mb-4">
+		@if (Model.Count == 0)
+		{
+			<h3 class="col-6 tm-text-gray-light">No Photo available yet</h3>
+		}
+		else
+		{
+			<h2 class="col-6 tm-text-primary">
+				Latest Photos
+			</h2>
+		}
+	</div>
+	<div class="row tm-mb-90 tm-gallery">
+		@if (Model != null)
+		{
+			foreach (var item in Model)
+			{
+				<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5">
+					<figure class=" tm-video-item">
+						<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
+						<input type="checkbox" name=" photo[]" />
+
+					</figure>
+					<div class="d-flex justify-content-between tm-text-gray">
+						@*<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
+						<span>@item.VoiceCount like(-s)</span>*@
+						<div class="row" style="margin-top:-.5rem">
+							@*@using (Html.BeginForm("ChangeVisibility", "Gallery", new { photoId = item.Id }))
+								{
+									<input type="hidden" value="@item.Id" name="photoId" />
+									<button type="submit" rel="tooltip" title="Visibility" class="btn btn-outline-warning" style="margin-right:.1rem; border: none">
+
+										@if (item.IsPublish)
+										{
+											<i class="material-icons">visibility</i>
+										}
+										else
+										{
+											<i class="material-icons">visibility_off</i>
+										}
+									</button>
+								}
+
+								<button type="button" rel="tooltip" title="Remove" class="btn btn-outline-warning" style="margin-right:1.5rem; border: none" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Id">
+									<i class="material-icons">delete_outline</i>
+								</button>*@
+						</div>
+
+						@*<div class="modal fade" id="Remove_staticBackdrop_@item.Id" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="staticBackdropLabel">Remove Photo</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											Are you sure you want to remove a photo?
+										</div>
+										<div class="modal-footer">
+											@using (Html.BeginForm("RemovePhoto", "Gallery", FormMethod.Post, new { photoId = item.Id }))
+											{
+												<input type="hidden" value="@item.Id" name="photoId" />
+												<input type="submit" value="Remove" name="submit" class="btn btn-warning" />
+											}
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>*@
+
+
+					</div>
+				</div>
+			}
+		}
+
+	</div>
+</div>
+
+

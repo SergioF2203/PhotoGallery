@@ -432,6 +432,7 @@
     <Content Include="Views\Shared\_GalleryLayout.cshtml" />
     <Content Include="Views\Gallery\UserGallery.cshtml" />
     <Content Include="Views\Gallery\UserAlbum.cshtml" />
+    <Content Include="Views\Gallery\Album.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

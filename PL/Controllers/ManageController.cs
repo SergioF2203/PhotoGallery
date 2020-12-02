@@ -228,8 +228,13 @@ namespace PL.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model, string submit)
         {
+            if(submit == "Cancel")
+            {
+                return RedirectToAction("UserGallery", "Gallery");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

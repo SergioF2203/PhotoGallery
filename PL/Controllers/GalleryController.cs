@@ -200,6 +200,16 @@ namespace PL.Controllers
             return RedirectToAction("UserGallery");
         }
 
+        public async Task<ActionResult> Album()
+        {
+            var user = await _userService.FindUserByName(User.Identity.Name);
+
+            var photoPaths = _photoService.GelAllPhotosPaths(user.Id);
+
+            return View(photoPaths);
+
+        }
+
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
