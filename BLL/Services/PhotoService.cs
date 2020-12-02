@@ -23,7 +23,7 @@ namespace BLL.Services
             _unitOfwork = unitOfWork;
             _mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Photo, PhotoDto>().ReverseMap();
+                cfg.CreateMap<Photo, PhotoDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(scr=>scr.Raiting.VoicesCount)).ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
                 cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(src=>src.Raiting.VoicesCount));
                 cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst=>dst.VoiceCount, opt=>opt.MapFrom(src=>src.Raiting.VoicesCount));
@@ -115,7 +115,7 @@ namespace BLL.Services
                 var index = item.PhotoPath.IndexOf("Upload");
                 var cutedPath = item.PhotoPath.Substring(index + 7);
 
-                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish };
+                var tempItem = new EditPhotoDto() { Id = item.Id, PhotoPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish, VoiceCount = item.VoiceCount };
 
                 editPhotosList.Add(tempItem);
             }

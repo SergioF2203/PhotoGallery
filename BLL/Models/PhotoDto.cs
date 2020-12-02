@@ -14,6 +14,7 @@ namespace BLL.Models
         public DateTime DateTimeUploading { get; set; }
         public string PhotoPath { get; set; }
         public bool IsPublish { get; set; }
+        public int VoiceCount { get; set; }
         public string ApplicationUserId { get; set; }
     }
 }

@@ -52,7 +52,7 @@
 					</figure>
 					<div class="d-flex justify-content-between tm-text-gray">
 						<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
-						<span>9,906 likes</span>
+						<span>@item.VoiceCount like(-s)</span>
 						<div class="row" style="margin-top:-.5rem">
 							@using (Html.BeginForm("ChangeVisibility", "Gallery", new { photoId = item.Id}))
 							{

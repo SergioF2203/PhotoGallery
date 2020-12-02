@@ -55,7 +55,7 @@
 						<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
 						<div class="d-flex justify-content-between tm-text-gray">
 							<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
-							<span>@item.VoiceCount likes</span>
+							<span>@item.VoiceCount like(-s)</span>
 							<div class="row" style="margin-top:-.5rem">
 								@using (Html.BeginForm("ChangeLike", "Home", new { photoId = item.Id, user = User.Identity.Name }))
 								{
@@ -95,7 +95,7 @@ else
 						<img src="~/Upload/@item.PhotoPath" alt="Image" class="img-fluid">
 						<div class="d-flex justify-content-between tm-text-gray">
 							<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
-							<span>@item.VoiceCount likes</span>
+							<span>@item.VoiceCount like(-s)</span>
 						</div>
 					</div>
 				}
