@@ -8,7 +8,10 @@
 	<p class="text-success">@ViewBag.StatusMessage</p>
 	@using (Html.BeginForm("AddPhoto", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
 	{
-		@Html.ValidationSummary("", new { @class = "text-danger" })
+		if (TempData.ContainsKey("Message"))
+		{
+			<div class="alert alert-danger">@TempData["Message"].ToString()</div>
+		}
 
 		<div class="example-2">
 			<div class="form-group row">
@@ -54,7 +57,7 @@
 						<span class="tm-text-gray-light">@item.DateTimeUploading.ToString("dd MMM yyyy")</span>
 						<span>@item.VoiceCount like(-s)</span>
 						<div class="row" style="margin-top:-.5rem">
-							@using (Html.BeginForm("ChangeVisibility", "Gallery", new { photoId = item.Id}))
+							@using (Html.BeginForm("ChangeVisibility", "Gallery", new { photoId = item.Id }))
 							{
 								<input type="hidden" value="@item.Id" name="photoId" />
 								<button type="submit" rel="tooltip" title="Visibility" class="btn btn-outline-warning" style="margin-right:.1rem; border: none">
@@ -98,12 +101,9 @@
 								</div>
 							</div>
 						</div>
-
-
 					</div>
 				</div>
 			}
 		}
-
 	</div>
 </div>

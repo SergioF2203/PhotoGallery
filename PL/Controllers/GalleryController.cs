@@ -83,15 +83,20 @@ namespace PL.Controllers
                 var fileSize = file.ContentLength;
 
                 //check file size
-                if (fileSize > 1000 * 1024)
+                //max image size
+                int maxImageSize = int.Parse(ConfigurationManager.AppSettings["MaxByteImageSize"]);
+
+                if (fileSize > maxImageSize * 1024)
                 {
-                    ModelState.AddModelError("size", "File is too big");
-                    return View();
+                    TempData["Message"] = "file is too big";
+                    return RedirectToAction("UserGallery", "Gallery");
                 }
 
                 var fileExtention = Path.GetExtension(file.FileName).ToLower();
-                //var listOfExtensions = new List<string>() { ".jpg", ".jpeg", ".bmp", ".png" };
+
+                //valid exeptions
                 string[] listOfExtensions = ConfigurationManager.AppSettings["ValidImageExtensions"].Split(',');
+
                 var isAccept = false;
 
                 //check valid file extension
@@ -106,8 +111,9 @@ namespace PL.Controllers
 
                 if (!isAccept)
                 {
-                    ModelState.AddModelError("extension", "File isn't a picture");
-                    return View();
+                    TempData["Message"] = "File isn't a picture";
+
+                    return RedirectToAction("UserGallery");
                 }
 
                 fileName = Path.GetFileName(file.FileName);
@@ -121,8 +127,9 @@ namespace PL.Controllers
                 {
                     if (System.IO.File.Exists(path))
                     {
-                        ModelState.AddModelError("file", "The file with same name ia already exist");
-                        return View();
+                        TempData["Message"] = "The file with same name ia already exist";
+
+                        return RedirectToAction("UserGallery");
                     }
                     else
                     {
