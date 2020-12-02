@@ -50,7 +50,7 @@ namespace BLL.Services
 
         public IEnumerable<ViewPhotoLikeDto> GetAllPhotoForLiked(string userName)
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().OrderByDescending(p => p.DateTimeUploading).ToList();
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoLikeDto>>(photos);
             var likedPhotos = _unitOfwork.LikedEntityRepository.FindAll().ToList();
@@ -84,7 +84,7 @@ namespace BLL.Services
 
         public IEnumerable<ViewPhotoDto> GetAllPhoto()
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().OrderByDescending(p => p.DateTimeUploading).ToList();
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p=>p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoDto>>(photos);
 
