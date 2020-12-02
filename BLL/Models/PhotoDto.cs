@@ -13,6 +13,7 @@ namespace BLL.Models
         public string PhotoTitle { get; set; }
         public DateTime DateTimeUploading { get; set; }
         public string PhotoPath { get; set; }
+        public string ThumbnailPath { get; set; }
         public bool IsPublish { get; set; }
         public int VoiceCount { get; set; }
         public string ApplicationUserId { get; set; }

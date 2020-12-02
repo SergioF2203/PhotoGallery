@@ -10,7 +10,7 @@ namespace DAL.Entities
     public class Photo : BaseEntity
     {
         public string PhotoPath { get; set; }
-
+        public string ThumbnailPath { get; set; }
         public string PhotoTitle { get; set; }
         public DateTime DateTimeUploading { get; set; } = default;
         public Raiting Raiting { get; set; } = new Raiting();
@@ -26,6 +26,5 @@ namespace DAL.Entities
     public class Raiting
     {
         public int VoicesCount { get; set; } = 0;
-        //public float CurrentRaiting { get; set; } = 0;
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -56,7 +58,7 @@ namespace PL.Controllers
             return View(photoPaths);
         }
 
-        
+
 
         public ActionResult UserAlbum()
         {
@@ -71,10 +73,14 @@ namespace PL.Controllers
         {
             var fileName = string.Empty;
             var path = string.Empty;
+            var thumbFileName = string.Empty;
 
+            //check exist file from from
             if (file != null)
             {
                 var fileSize = file.ContentLength;
+
+                //check file size
                 if (fileSize > 1000 * 1024)
                 {
                     ModelState.AddModelError("size", "File is too big");
@@ -85,6 +91,7 @@ namespace PL.Controllers
                 var listOfExtensions = new List<string>() { ".jpg", ".jpeg", ".bmp", ".png" };
                 var isAccept = false;
 
+                //check valid file extension
                 foreach (var item in listOfExtensions)
                 {
                     if (fileExtention == item)
@@ -102,8 +109,11 @@ namespace PL.Controllers
 
                 fileName = Path.GetFileName(file.FileName);
                 var dirPath = Path.Combine(Server.MapPath("~/Upload/"), User.Identity.GetUserId());
+
+
                 path = Path.Combine(dirPath, fileName);
 
+                //check exist directory
                 if (Directory.Exists(dirPath))
                 {
                     if (System.IO.File.Exists(path))
@@ -121,10 +131,66 @@ namespace PL.Controllers
                     Directory.CreateDirectory(dirPath);
                     file.SaveAs(path);
                 }
+
+                //creates thumbnail
+                Rectangle cropRectangle = new Rectangle(0, 0, 420, 236);
+                Bitmap src = Image.FromStream(file.InputStream, true, true) as Bitmap;
+                Bitmap target = new Bitmap(cropRectangle.Width, cropRectangle.Height);
+
+                target.SetResolution(src.HorizontalResolution, src.VerticalResolution);
+
+                using (Graphics g = Graphics.FromImage(target))
+                {
+                    g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                    g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                    using(var wrapMode = new ImageAttributes())
+                    {
+                        wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
+                        g.DrawImage(src, cropRectangle, 0, 0, src.Width, src.Height, GraphicsUnit.Pixel, wrapMode);
+                    }
+                }
+
+                //thumbnail file name
+                thumbFileName = Path.GetFileNameWithoutExtension(file.FileName) + "_thumb";
+                thumbFileName += Path.GetExtension(file.FileName);
+
+                //thumbnail path
+                var thumbPath = Path.Combine(Server.MapPath("~/Upload/" + User.Identity.GetUserId()), "thumbnail");
+                var thumbFilePath = Path.Combine(thumbPath, thumbFileName);
+
+
+                //check exist directory
+                if (Directory.Exists(thumbPath))
+                {
+                    if (!System.IO.File.Exists(thumbFilePath))
+                    {
+                        target.Save(thumbFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory(thumbPath);
+                    target.Save(thumbFilePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+
             }
 
             var userId = _userService.FindUserByName(User.Identity.Name).Result.Id;
-            var pic = new PhotoDto() { Id = Guid.NewGuid().ToString(), PhotoName = fileName, DateTimeUploading = DateTime.Now, PhotoPath = path, IsPublish = false, ApplicationUserId = userId };
+
+            var pic = new PhotoDto()
+            {
+                Id = Guid.NewGuid().ToString(),
+                PhotoName = fileName,
+                DateTimeUploading = DateTime.Now,
+                PhotoPath = path,
+                ThumbnailPath = thumbFileName,
+                IsPublish = false,
+                ApplicationUserId = userId
+            };
 
 
             _photoService.Add(pic);
@@ -135,9 +201,9 @@ namespace PL.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddAlbum (string albumTitle)
+        public ActionResult AddAlbum(string albumTitle)
         {
-            var album = new AlbumDto() {Id = Guid.NewGuid().ToString(), Title = albumTitle };
+            var album = new AlbumDto() { Id = Guid.NewGuid().ToString(), Title = albumTitle };
 
             _albumService.Add(album);
 
