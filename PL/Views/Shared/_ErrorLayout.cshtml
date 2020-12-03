@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>My Account</title>
+	<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/Content/all.min.css" rel="stylesheet" />
+	<link href="~/Content/templatemo-style.css" rel="stylesheet" />
+	<link href="~/Content/Site.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg">
+		<div class="container-fluid">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link nav-link-2" })
+					</li>
+					@*<li class="nav-item">
+							@Html.ActionLink("Photos", "UserGallery", new { controller = "Gallery" }, new { @class = "nav-link nav-link-2" })
+						</li>
+						<li class="nav-item">
+							@Html.ActionLink("Albums", "UserAlbum", new { controller = "Gallery" }, new { @class = "nav-link nav-link-2" })
+						</li>*@
+						<li class="nav-item">
+							@if (User.Identity.Name.ToString() == "")
+							{
+								@Html.ActionLink("Guest", "Index", "Manage", null, new { @class = "nav-link nav-link-2" })
+							}
+							else
+							{
+								@Html.ActionLink(@User.Identity.Name.ToString(), "Index", "Manage", null, new { @class = "nav-link nav-link-2" })
+							}
+						</li>
+						<li class="nav-item">
+							@Html.ActionLink("LogOff", "LogOff", new { controller = "Gallery" }, new { @class = "nav-link nav-link-2" })
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+
+		@RenderBody()
+
+
+		@Scripts.Render("~/bundles/jquery")
+		@Scripts.Render("~/bundles/bootstrap")
+		@Scripts.Render("~/bundles/material")
+		@RenderSection("scripts", required: false)
+
+
+		@*<script src="js/plugins.js"></script>
+		<script>
+			$(window).on("load", function () {
+				$('body').addClass('loaded');
+			});
+
+			$('.input-file').each(function () {
+				var $input = $(this),
+					$label = $input.next('.js-labelFile'),
+					labelVal = $label.html();
+
+				$input.on('change', function (element) {
+					var fileName = '';
+					if (element.target.value) fileName = element.target.value.split('\\').pop();
+					fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+
+				});
+			});
+
+		</script>*@
+</body>
+</html>
