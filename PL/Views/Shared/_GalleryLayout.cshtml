@@ -27,7 +27,14 @@
 						@Html.ActionLink("Albums", "UserAlbum", null, new { @class = "nav-link nav-link-2" })
 					</li>
 					<li class="nav-item">
-						@Html.ActionLink(@User.Identity.Name.ToString(), "Index", "Manage", null, new { @class = "nav-link nav-link-2" })
+						@if (User.Identity.Name.ToString() == "")
+						{
+							@Html.ActionLink("Guest", "Index", "Manage", null, new { @class = "nav-link nav-link-2" })
+						}
+						else
+						{
+							@Html.ActionLink(@User.Identity.Name.ToString(), "Index", "Manage", null, new { @class = "nav-link nav-link-2" })
+						}
 					</li>
 					<li class="nav-item">
 						@Html.ActionLink("LogOff", "LogOff", null, new { @class = "nav-link nav-link-2" })

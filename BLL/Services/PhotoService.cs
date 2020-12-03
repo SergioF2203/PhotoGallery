@@ -80,7 +80,14 @@ namespace BLL.Services
                 var index = item.ThumbnailPath.IndexOf("Upload");
                 var cutedPath = item.ThumbnailPath.Substring(index);
 
-                customPhotoList.Add(new ViewPhotoLikeDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, ThumbnailPath = cutedPath, IsLiked = item.IsLiked, VoiceCount = item.VoiceCount });
+                customPhotoList.Add(new ViewPhotoLikeDto
+                {
+                    Id = item.Id,
+                    DateTimeUploading = item.DateTimeUploading,
+                    ThumbnailPath = cutedPath,
+                    IsLiked = item.IsLiked,
+                    VoiceCount = item.VoiceCount
+                });
             }
 
             return customPhotoList;
@@ -99,7 +106,13 @@ namespace BLL.Services
                 var index = item.ThumbnailPath.IndexOf("Upload");
                 var cutedPath = item.ThumbnailPath.Substring(index);
 
-                customPhotoList.Add(new ViewPhotoDto { Id = item.Id, DateTimeUploading = item.DateTimeUploading, ThumbnailPath = cutedPath, VoiceCount = item.VoiceCount });
+                customPhotoList.Add(new ViewPhotoDto
+                {
+                    Id = item.Id,
+                    DateTimeUploading = item.DateTimeUploading,
+                    ThumbnailPath = cutedPath,
+                    VoiceCount = item.VoiceCount
+                });
             }
 
             return customPhotoList;
@@ -119,9 +132,14 @@ namespace BLL.Services
                 var index = item.ThumbnailPath.IndexOf("Upload");
                 var cutedPath = item.ThumbnailPath.Substring(index);
 
-                var tempItem = new EditPhotoDto() { Id = item.Id, ThumbnailPath = cutedPath, DateTimeUploading = item.DateTimeUploading, IsPublish = item.IsPublish, VoiceCount = item.VoiceCount };
-
-                editPhotosList.Add(tempItem);
+                editPhotosList.Add(new EditPhotoDto()
+                {
+                    Id = item.Id,
+                    ThumbnailPath = cutedPath,
+                    DateTimeUploading = item.DateTimeUploading,
+                    IsPublish = item.IsPublish,
+                    VoiceCount = item.VoiceCount
+                });
             }
 
             return editPhotosList;
