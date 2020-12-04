@@ -43,7 +43,7 @@ namespace PL.Controllers
         // GET: Gallery
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("UserGallery");
         }
 
         /// <summary>

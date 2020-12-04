@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using BLL.Interfaces;
-using BLL.Models;
 
 namespace PL.Controllers
 {
@@ -38,6 +33,12 @@ namespace PL.Controllers
             }
         }
 
+        /// <summary>
+        /// Togle like status like/unlike
+        /// </summary>
+        /// <param name="photoId">liked photo</param>
+        /// <param name="user">liked user</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> ChangeLike(string photoId, string user)
         {

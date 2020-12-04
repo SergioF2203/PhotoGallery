@@ -30,18 +30,15 @@ namespace PL.Controllers
         }
 
 
-        //
+        /// <summary>
+        /// Manage index page
+        /// </summary>
+        /// <param name="message">Enum maessage</param>
+        /// <returns></returns>
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
-                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+            ViewBag.StatusMessage = message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed.": "";
 
             var model = new IndexViewModel
             {
@@ -51,14 +48,22 @@ namespace PL.Controllers
         }
 
 
-        //
+        /// <summary>
+        /// Change Password Page
+        /// </summary>
+        /// <returns></returns>
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
+        /// <summary>
+        /// Change Password page
+        /// </summary>
+        /// <param name="model">Password model</param>
+        /// <param name="submit">action param</param>
+        /// <returns></returns>
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,28 +112,6 @@ namespace PL.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             ModelState.AddModelError("", result.Message);
-            return View(model);
-        }
-
-        //
-        // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/SetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-            }
-
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
