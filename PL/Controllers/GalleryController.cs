@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -23,7 +21,7 @@ namespace PL.Controllers
         private readonly IPhotoService _photoService;
         private readonly IUserService _userService;
         private readonly IAlbumService _albumService;
-        private Mapper _mapper;
+        private readonly Mapper _mapper;
         public GalleryController(IPhotoService photoService, IUserService userService, IAlbumService albumService)
         {
             _photoService = photoService;
@@ -32,9 +30,16 @@ namespace PL.Controllers
 
             //mapping for transfer id and a path of image
             _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<EditPhotoDto, PhotoEditModel>().ReverseMap()));
-
-
         }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
         // GET: Gallery
         public ActionResult Index()
         {
@@ -68,7 +73,11 @@ namespace PL.Controllers
             return View(temp);
         }
 
-
+        /// <summary>
+        /// Add photo ti user's gallery
+        /// </summary>
+        /// <param name="file">a file to  upload</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddPhoto(HttpPostedFileBase file)
         {
@@ -117,7 +126,10 @@ namespace PL.Controllers
                 }
 
                 fileName = Path.GetFileName(file.FileName);
-                var dirPath = Path.Combine(Server.MapPath("~/Upload/"), User.Identity.GetUserId());
+                //upload path from app.settings
+                var uploadPath = ConfigurationManager.AppSettings["UploadImagePath"];
+
+                var dirPath = Path.Combine(Server.MapPath(uploadPath), User.Identity.GetUserId());
 
 
                 path = Path.Combine(dirPath, fileName);
@@ -157,7 +169,7 @@ namespace PL.Controllers
                     g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                     g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
-                    using(var wrapMode = new ImageAttributes())
+                    using (var wrapMode = new ImageAttributes())
                     {
                         wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
                         g.DrawImage(src, cropRectangle, 0, 0, src.Width, src.Height, GraphicsUnit.Pixel, wrapMode);
@@ -169,7 +181,7 @@ namespace PL.Controllers
                 thumbFileName += Path.GetExtension(file.FileName);
 
                 //thumbnail path
-                var thumbPath = Path.Combine(Server.MapPath("~/Upload/" + User.Identity.GetUserId()), "thumbnail");
+                var thumbPath = Path.Combine(Server.MapPath(uploadPath + User.Identity.GetUserId()), "thumbnail");
                 thumbFilePath = Path.Combine(thumbPath, thumbFileName);
 
 
@@ -210,6 +222,11 @@ namespace PL.Controllers
             return RedirectToAction("GetAllPath", "Gallery", new { userId = pic.ApplicationUserId });
         }
 
+        /// <summary>
+        /// Add an album
+        /// </summary>
+        /// <param name="albumTitle">album's title</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddAlbum(string albumTitle)
         {
@@ -220,6 +237,11 @@ namespace PL.Controllers
             return RedirectToAction("UserAlbum");
         }
 
+        /// <summary>
+        /// Remove a photo from gallery and server
+        /// </summary>
+        /// <param name="photoId">photo's id</param>
+        /// <returns></returns>
         public async Task<ActionResult> RemovePhoto(string photoId)
         {
             var photo = await _photoService.GetPhotoByIdAsync(photoId);
@@ -238,6 +260,11 @@ namespace PL.Controllers
             return RedirectToAction("UserGallery");
         }
 
+        /// <summary>
+        /// Remove an album
+        /// </summary>
+        /// <param name="albumId">album's id</param>
+        /// <returns></returns>
         public async Task<ActionResult> RemoveAlbum(string albumId)
         {
             var album = await _albumService.GetAlbumByIdAsync(albumId);
@@ -247,6 +274,11 @@ namespace PL.Controllers
             return RedirectToAction("UserAlbum");
         }
 
+        /// <summary>
+        /// Get all photos' path for single user
+        /// </summary>
+        /// <param name="userId">user's id</param>
+        /// <returns></returns>
         public ActionResult GetAllPath(string userId)
         {
             var temp = _photoService.GelAllPhotosPaths(userId);
@@ -254,18 +286,6 @@ namespace PL.Controllers
             return View("UserGallery", temp);
         }
 
-        public ActionResult GetPhoto()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> GetPhoto(GetPhotoViewModel model)
-        {
-            var temp = await _photoService.GetPhotoByIdAsync(model.Id);
-
-            return View();
-        }
 
         /// <summary>
         /// Change photo visibility
@@ -280,6 +300,10 @@ namespace PL.Controllers
             return RedirectToAction("UserGallery");
         }
 
+        /// <summary>
+        /// Get photo in user's album
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> Album()
         {
             var user = await _userService.FindUserByName(User.Identity.Name);
@@ -296,13 +320,6 @@ namespace PL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
     }
 }

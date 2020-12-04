@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DAL.Context;
 using DAL.Entities;
@@ -13,10 +10,19 @@ namespace DAL.Repositories
     {
         private readonly PhotoGalleryContext _database;
 
+        /// <summary>
+        /// Ctor Client Manager
+        /// </summary>
+        /// <param name="db">PhtotGalleryContext</param>
         public ClientManager(PhotoGalleryContext db)
         {
             _database = db;
         }
+
+        /// <summary>
+        /// Create ClientProfile
+        /// </summary>
+        /// <param name="item">ClientProfile item</param>
         public void Create(ClientProfile item)
         {
             _database.ClientProfiles.Add(item);
@@ -41,14 +47,24 @@ namespace DAL.Repositories
             disposed = true;
         }
 
+        /// <summary>
+        /// Get a client profile by Id async
+        /// </summary>
+        /// <param name="id">A clint's profile id</param>
+        /// <returns>a client profile</returns>
         public async Task<ClientProfile> GetByIdAsync(string id)
         {
             return await _database.ClientProfiles.FindAsync(id);
         }
 
+        /// <summary>
+        /// Remove a clien't profile
+        /// </summary>
+        /// <param name="item">a clien't profile entity</param>
+        /// <returns></returns>
         public async Task Remove(ClientProfile item)
         {
-            await Task.Run(()=>_database.ClientProfiles.Remove(item));
+            await Task.Run(() => _database.ClientProfiles.Remove(item));
 
             await _database.SaveChangesAsync();
         }

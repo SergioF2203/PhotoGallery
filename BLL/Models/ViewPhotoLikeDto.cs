@@ -15,7 +15,5 @@ namespace BLL.Models
         public bool IsLiked { get; set; }
         public int VoiceCount { get; set; }
         public string ThumbnailPath { get; set; }
-
-
     }
 }

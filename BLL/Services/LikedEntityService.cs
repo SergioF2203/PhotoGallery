@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BLL.Interfaces;
 using DAL.Entities;
@@ -13,11 +11,21 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
+        /// <summary>
+        /// Ctor LinkedEntity Service
+        /// </summary>
+        /// <param name="unitOfWork">IUnitOfWork interface</param>
         public LikedEntityService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Async togle like state 
+        /// </summary>
+        /// <param name="entityId">Change like status entity Id</param>
+        /// <param name="userName">Change like status user name</param>
+        /// <returns></returns>
         public async Task TogleLikedStateAsync(string entityId, string userName)
         {
             var photo = await _unitOfWork.PhotoRepository.FindByIdAsync(entityId);

@@ -33,6 +33,18 @@ namespace PL.Areas.Admin.Controllers
             }
         }
 
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
+
+        /// <summary>
+        /// Admin controller ctor
+        /// </summary>
         public AdminController()
         {
             var config = new MapperConfiguration(cfg =>
@@ -50,6 +62,12 @@ namespace PL.Areas.Admin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Get all roles
+        /// </summary>
+        /// <param name="submit">Cancel or Create param</param>
+        /// <returns></returns>
+        //GET: Admin/GetRoles
         public ActionResult GetRoles(string submit)
         {
             switch (submit)
@@ -71,6 +89,12 @@ namespace PL.Areas.Admin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Add role 
+        /// </summary>
+        /// <param name="model">Role;s model</param>
+        /// <param name="submit">action param</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> AddRole(RoleViewModel model, string submit)
         {
@@ -91,6 +115,7 @@ namespace PL.Areas.Admin.Controllers
             }
         }
 
+        //GET:/Admin/GetUsers
         public ActionResult GetUsers()
         {
             var users = UserService.GetUsers().ToList();
@@ -107,6 +132,12 @@ namespace PL.Areas.Admin.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
+        /// <summary>
+        /// LOck or Remove user's account
+        /// </summary>
+        /// <param name="email">user's email</param>
+        /// <param name="submit">lock or remove param</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> LockOrRemove(string email, string submit)
         {
@@ -132,25 +163,27 @@ namespace PL.Areas.Admin.Controllers
 
         }
 
+        /// <summary>
+        /// Remove a role
+        /// </summary>
+        /// <param name="roleName">role's name</param>
+        /// <returns></returns>
         public async Task<ActionResult> RemoveRole(string roleName)
         {
             await RoleService.Remove(roleName);
             return Redirect("/Admin/Admin/GetRoles/");
         }
 
+        /// <summary>
+        /// Log off
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
 
     }
 }

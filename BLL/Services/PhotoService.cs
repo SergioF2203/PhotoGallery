@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Models;
@@ -18,6 +15,10 @@ namespace BLL.Services
         private readonly IUnitOfWork _unitOfwork;
         private readonly Mapper _mapper;
 
+        /// <summary>
+        /// Ctor Photo Service
+        /// </summary>
+        /// <param name="unitOfWork">IUnitOfWork interface</param>
         public PhotoService(IUnitOfWork unitOfWork)
         {
             _unitOfwork = unitOfWork;
@@ -29,18 +30,33 @@ namespace BLL.Services
                 cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount));
             }));
         }
+
+        /// <summary>
+        /// Add async photo Dto
+        /// </summary>
+        /// <param name="model">Photo Dto model</param>
+        /// <returns></returns>
         public async Task AddAsync(PhotoDto model)
         {
             await _unitOfwork.PhotoRepository.AddAsync(_mapper.Map<PhotoDto, Photo>(model));
             await _unitOfwork.SaveASync();
         }
 
+        /// <summary>
+        /// Add photo Dto
+        /// </summary>
+        /// <param name="model">Photo Dto model</param>
         public void Add(PhotoDto model)
         {
             _unitOfwork.PhotoRepository.Add(_mapper.Map<PhotoDto, Photo>(model));
             _unitOfwork.SaveASync();
         }
 
+        /// <summary>
+        /// Get async photo by Id
+        /// </summary>
+        /// <param name="id">Photo Id</param>
+        /// <returns>Photo Dto</returns>
         public async Task<PhotoDto> GetPhotoByIdAsync(string id)
         {
             var photo = await _unitOfwork.PhotoRepository.FindByIdAsync(id);
@@ -48,6 +64,11 @@ namespace BLL.Services
             return _mapper.Map<Photo, PhotoDto>(photo);
         }
 
+        /// <summary>
+        /// Get All Photo for like
+        /// </summary>
+        /// <param name="userName">User Name</param>
+        /// <returns>IEnumerable ViewPhotoLikeDto</returns>
         public async Task<IEnumerable<ViewPhotoLikeDto>> GetAllPhotoForLiked(string userName)
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
@@ -55,8 +76,6 @@ namespace BLL.Services
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoLikeDto>>(photos);
 
             _unitOfwork.LikedEntityRepository.FindAll().ToList();
-
-            //var usersLikedPhoto = _unitOfwork.UserManager.FindByNameAsync(userName).Result.LikedPhoto.ToList();
 
             var user = await _unitOfwork.UserManager.FindByNameAsync(userName);
             var usersLikedPhoto = user.LikedPhoto.ToList();
@@ -93,6 +112,10 @@ namespace BLL.Services
             return customPhotoList;
         }
 
+        /// <summary>
+        /// Get All Photo
+        /// </summary>
+        /// <returns>IEnumerable ViewPhotoDto</returns>
         public IEnumerable<ViewPhotoDto> GetAllPhoto()
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
@@ -119,6 +142,11 @@ namespace BLL.Services
         }
 
 
+        /// <summary>
+        /// Get all photo path
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <returns>IEnumerable EditPhotoDto</returns>
         public IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id)
         {
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.ApplicationUserId == id);
@@ -145,6 +173,10 @@ namespace BLL.Services
             return editPhotosList;
         }
 
+        /// <summary>
+        /// Get all photo path with pulish is true
+        /// </summary>
+        /// <returns>IEnumerable string paths</returns>
         public IEnumerable<string> GetPathsPublishPhoto()
         {
             var photos = _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(_unitOfwork.PhotoRepository.GetPublishPhotos());

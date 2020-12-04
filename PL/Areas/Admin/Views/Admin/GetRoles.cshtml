@@ -3,143 +3,76 @@
 	ViewBag.Title = "GetRoles";
 	Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
 }
-@*
-	<h2>User's Roles</h2>
 
-	<table class="table table-sm">
-		<tr>
-			<th>Role's Name</th>
-			<th>Actions</th>
-		</tr>
-		@foreach (var item in Model.Item1)
-		{
-			<tr>
-				<td>@item.Name</td>
-				<td class="row">
-
-					@using (Html.BeginForm(null, null, FormMethod.Post, new { name = item.Name }))
+<div>
+	<div class="col-lg-12 col-md-12">
+		<div class="card">
+			<div class="card-header card-header-success">
+				<h4 class="card-title">Roles</h4>
+				<p class="card-category">All Roles</p>
+			</div>
+			<div class="card-body table-responsive">
+				<table class="table table-hover">
+					<thead class="text-warning">
+					<th>Role's Name</th>
+					<th>Actions</th>
+					</thead>
+					@foreach (var role in Model.Item1)
 					{
-						<input type="hidden" value="@item.Name" name="roleName" />
-						<input type="submit" class="btn btn-outline-primary" value="Edit User's List" disabled="disabled" />
-					}
-
-					@using (Html.BeginForm("EditRole", "Admin", FormMethod.Post, new { name = item.Name, style = "margin-left: 5px; margin-right: 5px" }))
-					{
-						<input type="hidden" value="@item.Name" name="roleName" />
-						<input type="submit" class="btn btn-outline-warning" value="Edit" name="submit" disabled="disabled" />
-					}
-
-					<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Remove_staticBackdrop_@item.Name">Remove</button>
-
-
-					<!-- Model Remove a Role -->
-					<div class="modal fade" id="Remove_staticBackdrop_@item.Name" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="staticBackdropLabel">Remove Account</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
+						<tbody>
+							<tr>
+								<td>@role.Name</td>
+								<td>
+									<button type="button" rel="tooltip" title="Edit Users' list" class="btn btn-danger btn-link btn-sm" disabled="disabled">
+										<i class="material-icons">edit</i><p style="margin-bottom: auto">Edit Users' List</p>
 									</button>
-								</div>
-								<div class="modal-body">
-									Are you sure you want to remove @item.Name role?
-								</div>
-								<div class="modal-footer">
-									@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = item.Name }))
-									{
-										<input type="hidden" value="@item.Name" name="roleName" />
-										<input type="submit" class="btn btn-danger" value="Remove" name="submit" />
-									}
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</td>
-			</tr>
-		}
-	</table>
+
+									<button type="button" rel="tooltip" title="Edit Role" class="btn btn-danger btn-link btn-sm" disabled="disabled">
+										<i class="material-icons">brush</i><p style="margin-bottom: auto">Edit Role</p>
+									</button>
+
+
+									<button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" data-toggle="modal" data-target="#Remove_staticBackdrop_@role.Name">
+										<i class="material-icons">delete</i><p style="margin-bottom: auto">Remove</p>
+									</button>
+
+									<!-- Model Remove a Role -->
+									<div class="modal fade" id="Remove_staticBackdrop_@role.Name" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="staticBackdropLabel">Remove Account</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													Are you sure you want to remove @role.Name role?
+												</div>
+												<div class="modal-footer">
+													@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = role.Name }))
+													{
+														<input type="hidden" value="@role.Name" name="roleName" />
+														<input type="submit" class="btn btn-danger" value="Remove" name="submit" />
+													}
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					}
+				</table>
+			</div>
+		</div>
+	</div>
 
 	@using (Html.BeginForm("GetRoles", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 	{
 		<input type="submit" class="btn btn-primary" name="submit" value="Create" />
-		<input type="submit" class="btn btn-dark" name="submit" value="Cancel" />
 	}
-
-*@
-
-	<div>
-		<div class="col-lg-12 col-md-12">
-			<div class="card">
-				<div class="card-header card-header-success">
-					<h4 class="card-title">Roles</h4>
-					<p class="card-category">All Roles</p>
-				</div>
-				<div class="card-body table-responsive">
-					<table class="table table-hover">
-						<thead class="text-warning">
-						<th>Role's Name</th>
-						<th>Actions</th>
-						</thead>
-						@foreach (var role in Model.Item1)
-						{
-							<tbody>
-								<tr>
-									<td>@role.Name</td>
-									<td>
-										<button type="button" rel="tooltip" title="Edit Users' list" class="btn btn-danger btn-link btn-sm" disabled="disabled">
-											<i class="material-icons">edit</i><p style="margin-bottom: auto">Edit Users' List</p>
-										</button>
-
-										<button type="button" rel="tooltip" title="Edit Role" class="btn btn-danger btn-link btn-sm" disabled="disabled">
-											<i class="material-icons">brush</i><p style="margin-bottom: auto">Edit Role</p>
-										</button>
-
-
-										<button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" data-toggle="modal" data-target="#Remove_staticBackdrop_@role.Name">
-											<i class="material-icons">delete</i><p style="margin-bottom: auto">Remove</p>
-										</button>
-
-										<!-- Model Remove a Role -->
-										<div class="modal fade" id="Remove_staticBackdrop_@role.Name" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-											<div class="modal-dialog">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title" id="staticBackdropLabel">Remove Account</h5>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														Are you sure you want to remove @role.Name role?
-													</div>
-													<div class="modal-footer">
-														@using (Html.BeginForm("RemoveRole", "Admin", FormMethod.Post, new { name = role.Name }))
-														{
-															<input type="hidden" value="@role.Name" name="roleName" />
-															<input type="submit" class="btn btn-danger" value="Remove" name="submit" />
-														}
-														<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						}
-					</table>
-				</div>
-			</div>
-		</div>
-
-		@using (Html.BeginForm("GetRoles", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-		{
-			<input type="submit" class="btn btn-primary" name="submit" value="Create" />
-			@*<input type="submit" class="btn btn-dark" name="submit" value="Cancel" />*@
-		}
-
-	</div>
+</div>
 
 

@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoMap.cs" />
     <Compile Include="Infrastructure\OperationDetails.cs" />
     <Compile Include="Interfaces\IAlbumService.cs" />
     <Compile Include="Interfaces\ILikedEntityService.cs" />
@@ -77,7 +76,6 @@
     <Compile Include="Services\ServiceCreator.cs" />
     <Compile Include="Services\SingInService.cs" />
     <Compile Include="Services\UserService.cs" />
-    <Compile Include="Validation\PhotoGalleryException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj">

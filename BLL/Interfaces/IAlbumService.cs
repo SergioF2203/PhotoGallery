@@ -13,6 +13,5 @@ namespace BLL.Interfaces
         void Remove(AlbumDto model);
         IEnumerable<AlbumDto> GetAlbums();
         Task<AlbumDto> GetAlbumByIdAsync(string albumId);
-
     }
 }

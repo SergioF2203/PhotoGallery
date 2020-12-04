@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Infrastructure;
@@ -20,6 +18,10 @@ namespace BLL.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly Mapper _mapper;
 
+        /// <summary>
+        /// User service
+        /// </summary>
+        /// <param name="unitOfWork">IUnitOfWork repository</param>
         public UserService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -32,6 +34,11 @@ namespace BLL.Services
             _mapper = new Mapper(config);
         }
 
+        /// <summary>
+        /// Authenticate User
+        /// </summary>
+        /// <param name="userDto">User Dto model</param>
+        /// <returns>User's Claims</returns>
         public async Task<ClaimsIdentity> Authenticate(UserDto userDto)
         {
             ClaimsIdentity claims = null;
@@ -53,6 +60,11 @@ namespace BLL.Services
 
         }
 
+        /// <summary>
+        /// Create User
+        /// </summary>
+        /// <param name="userDto">User Dto model</param>
+        /// <returns>Operation Details</returns>
         public async Task<OperationDetails> Create(UserDto userDto)
         {
             var user = await _unitOfWork.UserManager.FindByEmailAsync(userDto.Email);
@@ -92,6 +104,10 @@ namespace BLL.Services
             }
         }
 
+        /// <summary>
+        /// Get All Users
+        /// </summary>
+        /// <returns>IEnumerable User's Dto</returns>
         public IEnumerable<UserDto> GetUsers()
         {
             var users = _unitOfWork.UserManager.Users.ToList();
@@ -99,7 +115,6 @@ namespace BLL.Services
             var userDtos = _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<UserDto>>(users);
 
             var roles = _unitOfWork.RoleManager.Roles.ToList();
-
 
             foreach (var userDto in userDtos)
             {
@@ -118,9 +133,14 @@ namespace BLL.Services
             }
 
             return userDtos;
-
         }
 
+        /// <summary>
+        /// Set Initial Data
+        /// </summary>
+        /// <param name="adminDto">User Dto</param>
+        /// <param name="roles">IEnumerable roles</param>
+        /// <returns></returns>
         public async Task SetInitialData(UserDto adminDto, IEnumerable<string> roles)
         {
             foreach (var roleName in roles)
@@ -223,9 +243,7 @@ namespace BLL.Services
         /// <returns></returns>
         public async Task<OperationDetails> ChangePasswordAsync(string userId, string oldPassword, string newPassword)
         {
-            var user = await _unitOfWork.UserManager.FindByIdAsync(userId); //????
-            //var result = await _unitOfWork.UserManager.ChangePasswordAsync(userId, oldPassword, newPassword);
-            var result = _unitOfWork.UserManager.ChangePassword(userId, oldPassword, newPassword);
+            var result = await Task.Run(() => _unitOfWork.UserManager.ChangePassword(userId, oldPassword, newPassword));
 
 
             if (result.Succeeded)

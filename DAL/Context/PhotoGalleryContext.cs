@@ -27,10 +27,5 @@ namespace DAL.Context
         public DbSet<Album> Albums { get; set; }
         public DbSet<LikedEntity> LikedEntities { get; set; }
 
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Properties<DateTime>().Configure(c => c.HasColumnType("datetime2"));
-        //}
     }
 }

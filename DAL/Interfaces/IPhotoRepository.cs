@@ -11,6 +11,5 @@ namespace DAL.Interfaces
     {
         IEnumerable<Photo> GetPublishPhotos();
         IEnumerable<Photo> GetPhotoByRating();
-        IEnumerable<Photo> GetPhotosById(string id);
     }
 }

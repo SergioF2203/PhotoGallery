@@ -16,6 +16,5 @@ namespace BLL.Interfaces
         Task<RoleDto> FindRoleByName(string name);
         Task Remove(string name);
         IEnumerable<UserDto> GetUsersByRole(RoleDto roleDto);
-
     }
 }

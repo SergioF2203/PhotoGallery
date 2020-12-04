@@ -22,9 +22,6 @@
 					</div>
 				</div>
 
-
-
-
 				@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
 					<div class="col-md-10">
 						@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -47,18 +44,9 @@
 				<p>
 					@Html.ActionLink("Register as a new user", "Register")
 				</p>
-				@* Enable this once you have account confirmation enabled for password reset functionality
-					<p>
-						@Html.ActionLink("Forgot your password?", "ForgotPassword")
-					</p>*@
 			}
 		</section>
 	</div>
-	@*<div class="col-md-4">
-		<section id="socialLoginForm">
-			@Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-		</section>
-	</div>*@
 </div>
 
 @section Scripts {

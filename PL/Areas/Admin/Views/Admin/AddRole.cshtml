@@ -4,7 +4,6 @@
 	Layout = "~/Areas/Admin/Views/Shared/_Admin.cshtml";
 }
 
-@*<h2>AddRole</h2>*@
 <div class="card col-lg-8">
 	<div class="card-header card-header-primary">
 		<h4 class="card-title">Add Role</h4>
@@ -13,14 +12,11 @@
 	@using (Html.BeginForm("AddRole", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 	{
 		@Html.AntiForgeryToken()
-		@*<h4>Add a role</h4>
-			<hr />*@
 		@Html.ValidationSummary("", new { @class = "text-danger" })
 		<div class="form-group">
 			@Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
 			<div class="col-md-10">
 				@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-				@*@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })*@
 
 			</div>
 		</div>
@@ -28,7 +24,6 @@
 			<div class="col-md-offset-2 col-md-10">
 				<input type="submit" class="btn btn-primary" name="submit" value="Add" />
 				<input type="submit" class="btn btn-dark" name="submit" value="Cancel" />
-				@*<input type="button" class="btn btn-outline-dark" onclick="location.href='@Request.UrlReferrer'" value="Back" />*@
 
 			</div>
 		</div>
