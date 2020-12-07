@@ -23,19 +23,19 @@ register as User;
 <ul>
 <li>create albums</li>
 <li>
-<i>rate photos of other users that are published;</i>
+rate photos of other users that are published;
 </li>
 <li>
-collect pics into albums inside of the account
+<i>collect pics into albums inside of the account</i>
 </li>
 <li>
-<i>sort photos by date;</i>
+sort photos by date (by default);
 </li>
 <li>
 <i>search for duplicate images (previously)</i>
 </li>
 <li>
-<i>publishing photos for viewing</i>
+publishing photos for viewing
 </li>
 </ul>
 </n>
@@ -56,7 +56,7 @@ Each photo can be:
 🖼️<b>PHOTO:</b>
 <ul>
 <li>
-<i>photo is rated by users</i>
+photo is rated by users
 </li>
-<li><i>published or not</i></li>
+<li>published or not</li>
 </ul>
