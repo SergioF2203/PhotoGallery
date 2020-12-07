@@ -74,6 +74,12 @@ namespace PL.Controllers
                 return RedirectToAction("UserGallery", "Gallery");
             }
 
+            if(model.OldPassword == model.NewPassword)
+            {
+                ModelState.AddModelError(string.Empty, "The password have used already");
+                return View(model);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

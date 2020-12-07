@@ -36,13 +36,13 @@
 									@if (user.IsLockOut)
 									{
 										<button type="button" rel="tooltip" title="Unlock" data-target="#staticBackdrop_@user.Id" class="btn btn-primary btn-link btn-sm" data-toggle="modal">
-											<i class="material-icons">lock</i><p style="margin-bottom: auto">Lock</p>
+											<i class="material-icons">lock_open</i><p style="margin-bottom: auto">Unlock</p>
 										</button>
 									}
 									else
 									{
 										<button type="button" rel="tooltip" title="Lock" data-target="#staticBackdrop_@user.Id" class="btn btn-primary btn-link btn-sm" data-toggle="modal">
-											<i class="material-icons">lock_open</i><p style="margin-bottom: auto">Unlock</p>
+											<i class="material-icons">lock</i><p style="margin-bottom: auto">Lock</p>
 										</button>
 									}
 

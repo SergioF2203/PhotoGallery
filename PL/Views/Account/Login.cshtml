@@ -13,7 +13,9 @@
 				@Html.AntiForgeryToken()
 				<h4>Use a local account to log in.</h4>
 				<hr />
-				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				<div style="list-style-type: none">
+					@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				</div>
 				<div class="form-group">
 					@Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
 					<div class="col-md-10">
@@ -23,22 +25,22 @@
 				</div>
 
 				@Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-					<div class="col-md-10">
-						@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-						@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-					</div>
+				<div class="col-md-10">
+					@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+				</div>
 				<div class="form-group">
-						<div class="col-md-offset-2 col-md-10">
-							<div class="checkbox">
-								<input type="checkbox" onchange="document.getElementById('Password').type = this.checked ? 'text' : 'password'">
-								<label>Show Password</label>
-							</div>
+					<div class="col-md-offset-2 col-md-10">
+						<div class="checkbox">
+							<input type="checkbox" onchange="document.getElementById('Password').type = this.checked ? 'text' : 'password'">
+							<label>Show Password</label>
 						</div>
 					</div>
+				</div>
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-10">
 						<input type="submit" value="Log in" class="btn btn-primary" name="submit" />
-						<input type="submit" value="Cancel" class="btn btn-default" name="submit"/>
+						<input type="submit" value="Cancel" class="btn btn-default" name="submit" />
 					</div>
 				</div>
 				<p>

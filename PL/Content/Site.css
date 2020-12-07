@@ -23,6 +23,10 @@ textarea {
     max-width: 280px;
 }
 
+ul{
+    list-style-type: none;
+}
+
 /*Set style for ipload button*/
 .example-2 .btn-tertiary {
     color: #555;

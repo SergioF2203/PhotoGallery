@@ -156,20 +156,6 @@ namespace BLL.Services
             await Create(adminDto);
         }
 
-        private readonly bool disposed = false;
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed && disposing)
-            {
-                _unitOfWork.Dispose();
-            }
-        }
 
         /// <summary>
         /// Change Lock state User account
@@ -276,5 +262,23 @@ namespace BLL.Services
 
             return _mapper.Map<ApplicationUser, UserDto>(user);
         }
+
+        private bool disposed = false;
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!disposing && disposed)
+            {
+                _unitOfWork.Dispose();
+                disposed = true;
+            }
+        }
+
     }
 }

@@ -18,7 +18,6 @@ namespace PL
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            //app.CreatePerOwinContext(PhotoGalleryContext.Create);
             app.CreatePerOwinContext<IUserService>(CreateUserService);
             app.CreatePerOwinContext<IRoleService>(CreateRoleService);
 

@@ -26,7 +26,7 @@ namespace BLL.Services
             {
                 cfg.CreateMap<Photo, PhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(scr => scr.Raiting.VoicesCount)).ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
-                cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount));
+                cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount)).ForMember(dst=>dst.UserName, opt=>opt.MapFrom(src=>src.ApplicationUser.UserName));
                 cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount));
             }));
         }
@@ -118,6 +118,9 @@ namespace BLL.Services
         /// <returns>IEnumerable ViewPhotoDto</returns>
         public IEnumerable<ViewPhotoDto> GetAllPhoto()
         {
+
+            //var tempphotos = _unitOfwork.PhotoRepository.FindAll();
+
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
 
             var photosDto = _mapper.Map<IEnumerable<Photo>, IEnumerable<ViewPhotoDto>>(photos);
@@ -134,7 +137,8 @@ namespace BLL.Services
                     Id = item.Id,
                     DateTimeUploading = item.DateTimeUploading,
                     ThumbnailPath = cutedPath,
-                    VoiceCount = item.VoiceCount
+                    VoiceCount = item.VoiceCount,
+                    UserName = item.UserName
                 });
             }
 
