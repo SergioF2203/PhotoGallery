@@ -45,7 +45,7 @@ namespace DAL.Repositories
         /// <returns></returns>
         public IQueryable<Photo> FindAll()
         {
-            return _context.Photos;
+            return _context.Photos.Include("ApplicationUser");
         }
 
         /// <summary>

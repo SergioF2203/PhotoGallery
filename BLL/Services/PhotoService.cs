@@ -119,7 +119,7 @@ namespace BLL.Services
         public IEnumerable<ViewPhotoDto> GetAllPhoto()
         {
 
-            //var tempphotos = _unitOfwork.PhotoRepository.FindAll();
+            //var tempphotos = _unitOfwork.PhotoRepository.FindAll().ToList();
 
             var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.IsPublish).OrderByDescending(p => p.DateTimeUploading).ToList();
 
