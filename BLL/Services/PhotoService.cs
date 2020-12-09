@@ -27,7 +27,7 @@ namespace BLL.Services
                 cfg.CreateMap<Photo, PhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(scr => scr.Raiting.VoicesCount)).ReverseMap();
                 cfg.CreateMap<PhotoDto, EditPhotoDto>().ReverseMap();
                 cfg.CreateMap<Photo, ViewPhotoDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount)).ForMember(dst=>dst.UserName, opt=>opt.MapFrom(src=>src.ApplicationUser.UserName));
-                cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount));
+                cfg.CreateMap<Photo, ViewPhotoLikeDto>().ForMember(dst => dst.VoiceCount, opt => opt.MapFrom(src => src.Raiting.VoicesCount)).ForMember(dst=>dst.UserName, opt=>opt.MapFrom(src=>src.ApplicationUser.UserName));
             }));
         }
 
@@ -105,7 +105,8 @@ namespace BLL.Services
                     DateTimeUploading = item.DateTimeUploading,
                     ThumbnailPath = cutedPath,
                     IsLiked = item.IsLiked,
-                    VoiceCount = item.VoiceCount
+                    VoiceCount = item.VoiceCount,
+                    UserName = item.UserName
                 });
             }
 
@@ -153,7 +154,7 @@ namespace BLL.Services
         /// <returns>IEnumerable EditPhotoDto</returns>
         public IEnumerable<EditPhotoDto> GelAllPhotosPaths(string id)
         {
-            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.ApplicationUserId == id);
+            var photos = _unitOfwork.PhotoRepository.FindAll().Where(p => p.ApplicationUserId == id).ToList();
 
             var photoFullPath = _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos);
 
@@ -228,6 +229,36 @@ namespace BLL.Services
                 _unitOfwork.Dispose();
             }
             disposed = true;
+        }
+
+        /// <summary>
+        /// Get all photo by user's Id
+        /// </summary>
+        /// <param name="userId">string user's Id</param>
+        /// <returns>IEnumerable photo's Dto</returns>
+        public IEnumerable<PhotoDto> GetPhotoByUserId(string userId)
+        {
+            var photos =_unitOfwork.PhotoRepository.GetPhotoUserId(userId);
+            var dtos =  _mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoDto>>(photos);
+
+            var editPhotosList = new List<PhotoDto>();
+
+            foreach (var item in dtos)
+            {
+                var index = item.ThumbnailPath.IndexOf("Upload");
+                var cutedPath = item.ThumbnailPath.Substring(index);
+
+                editPhotosList.Add(new PhotoDto()
+                {
+                    Id = item.Id,
+                    ThumbnailPath = cutedPath,
+                    DateTimeUploading = item.DateTimeUploading,
+                    IsPublish = item.IsPublish,
+                    VoiceCount = item.VoiceCount
+                });
+            }
+
+            return editPhotosList;
         }
     }
 }

@@ -107,7 +107,29 @@ namespace DAL.Repositories
             var photoEntity = await _context.Photos.FindAsync(entity.Id);
             _context.Photos.Attach(photoEntity);
             _context.Entry(photoEntity).State = System.Data.Entity.EntityState.Modified;
+        }
 
+       /// <summary>
+       /// get all photos by user's id
+       /// </summary>
+       /// <param name="id">string user's id</param>
+       /// <returns></returns>
+        public IEnumerable<Photo> GetPhotoUserId(string id)
+        {
+            var allLikedEntites = _context.LikedEntities.Include("Users").ToList();
+
+            var listPhotoId = new List<string>();
+            foreach(var item in allLikedEntites)
+            {
+                if(item.Users.Any(u=>u.Id == id))
+                {
+                    listPhotoId.Add(item.Id);
+                }
+            }
+
+            var likedPhotos = _context.Photos.Where(p => listPhotoId.Contains(p.Id)).ToList();
+
+            return likedPhotos;
         }
     }
 }

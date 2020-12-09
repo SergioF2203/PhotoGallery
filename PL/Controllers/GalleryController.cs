@@ -47,7 +47,7 @@ namespace PL.Controllers
         }
 
         /// <summary>
-        /// Get all User's phoot
+        /// Get all User's photo
         /// </summary>
         /// <returns>All user's photo in gallery</returns>
         public ActionResult UserGallery()
@@ -312,6 +312,15 @@ namespace PL.Controllers
 
             return View(photoPaths);
 
+        }
+
+        public ActionResult LikedEntity()
+        {
+            var user = _userService.FindUserByName(User.Identity.Name).Result;
+
+            var photos = _photoService.GetPhotoByUserId(user.Id.ToString());
+
+            return View(photos);
         }
 
         public ActionResult LogOff()
