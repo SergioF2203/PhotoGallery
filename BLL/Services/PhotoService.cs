@@ -260,5 +260,61 @@ namespace BLL.Services
 
             return editPhotosList;
         }
+
+        /// <summary>
+        /// Async togle like state 
+        /// </summary>
+        /// <param name="entityId">Change like status entity Id</param>
+        /// <param name="userName">Change like status user name</param>
+        /// <returns></returns>
+        public async Task TogleLikedStateAsync(string entityId, string userName)
+        {
+            var photo = await _unitOfwork.PhotoRepository.FindByIdAsync(entityId);
+
+            //check exist entity in DB
+            if (_unitOfwork.LikedEntityRepository.FindAll().Any(e => e.Id == entityId))
+            {
+                //check exist user in collection
+                var entity = await _unitOfwork.LikedEntityRepository.FindByIdAsync(entityId);
+
+                if (entity.Users.Any(u => u.UserName == userName))
+                {
+                    var user = await _unitOfwork.UserManager.FindByNameAsync(userName);
+
+                    //remove user from collection
+                    entity.Users.Remove(user);
+
+                    //decrease like count in photo data
+                    photo.Raiting.VoicesCount--;
+                }
+                else
+                {
+                    entity.Users.Add(await _unitOfwork.UserManager.FindByNameAsync(userName));
+                    //increase like count
+                    photo.Raiting.VoicesCount++;
+                }
+
+                //check cpacity collection
+                //if capacity = 0, remove entity from table
+                if (entity.Users.Count == 0)
+                {
+                    _unitOfwork.LikedEntityRepository.Remove(entity);
+                }
+
+                await _unitOfwork.SaveASync();
+            }
+            else
+            {
+                var tempEntity = new LikedEntity() { Id = entityId };
+                tempEntity.Users.Add(await _unitOfwork.UserManager.FindByNameAsync(userName));
+
+                _unitOfwork.LikedEntityRepository.Add(tempEntity);
+                //increase like count
+                photo.Raiting.VoicesCount++;
+
+                await _unitOfwork.SaveASync();
+            }
+        }
+
     }
 }

@@ -42,7 +42,8 @@ namespace PL.Controllers
         [HttpPost]
         public async Task<ActionResult> ChangeLike(string photoId, string user)
         {
-            await _likedEntityService.TogleLikedStateAsync(photoId, user);
+            await _photoService.TogleLikedStateAsync(photoId, user);
+
 
             return RedirectToAction("Index");
         }

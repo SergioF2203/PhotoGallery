@@ -14,7 +14,7 @@ namespace BLL.Services
     public class RoleService : IRoleService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly Mapper _autoMap;
+        private readonly IMapper _autoMap;
 
         /// <summary>
         /// Ctor Role Service
